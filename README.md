@@ -15,5 +15,5 @@
   my personal inventory list and an organized record of everything and update it
   when there are changes.
 
-- As a user, I want to share certain inventory lists with other uses so that we
-  can collaborate on managing shared inventory itens.
+- As a user, I want to share certain inventory lists with other users so that we
+  can collaborate on managing shared inventory items.
