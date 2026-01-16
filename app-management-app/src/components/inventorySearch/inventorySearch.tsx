@@ -1,4 +1,5 @@
 import { useSearchFilter } from "../../hooks/useSearchFilter";
+import "./inventorySearch.css";
 
 interface InventoryItem {
     id: string;
@@ -26,7 +27,7 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
         // Inventory section to show a table of inventory items
         <section className="inventory-search">
             <h2>Current Inventory</h2>
-            <label>
+            <label className="searchLabel">
                 Inventory Search:
                 <input
                     type="text"
@@ -36,9 +37,9 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
                 />    
             </label>
 
-            <table>
+            <table className="inventoryTable">
                 <thead>
-                    <tr>
+                    <tr className="header-title">
                         <th>Id</th>
                         <th>Item</th>
                         <th>Category</th>
