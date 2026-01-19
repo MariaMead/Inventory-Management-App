@@ -1,0 +1,32 @@
+/* Simple styling for component and table*/
+.inventory-search {
+    font-family: "Fira Sans", Arial, sans-serif;
+   font-size: 1rem;
+   color: #2F4F4F;
+   background-color: #FFFFFF; 
+}
+
+.inventory-search h2 {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 1.5rem;
+  color: #127b7b;
+}
+
+.inventoryTable {
+    width: 100%;
+    font-size: 18px;
+}
+
+.inventoryTable th,
+.inventoryTable td {
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #2F4F4F;
+}
+
+
+.inventoryTable th {
+    background-color: #2F4F4F;
+    color: #FFFFFF;
+}
+
