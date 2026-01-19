@@ -1,0 +1,24 @@
+/* Simple styling for component and table*/
+.searchLabel {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px;
+    gap: 10px;    
+}
+
+.inventoryTable {
+    width: 100%;
+    font-size: 18px;
+}
+
+.inventoryTable th {
+    text-align: left;
+    padding: 5px;
+}
+
+
+.inventoryTableBody td {
+    text-align: left;
+    padding: 6px;
+}
+
