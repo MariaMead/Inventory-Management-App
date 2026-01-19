@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import InventorySearch from './components/inventorySearch/inventorySearch'
+import "./components/lowstockalert/lowStockAlert.css"
+import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,6 +34,7 @@ function App() {
       {/*Inventory Search component */}
         <InventorySearch />
       
+      <LowStockAlerts />
     </>
   )
 }
