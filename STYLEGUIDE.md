@@ -18,6 +18,6 @@
 
 ### Heading Sizes
 
-- H1: 2 rem (32pxpx)
+- H1: 2 rem (32px)
 - H2: 1.5 rem (24px)
 - H3: 1.25 rem (20px)
