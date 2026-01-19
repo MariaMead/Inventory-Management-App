@@ -17,3 +17,11 @@
 
 - As a user, I want to share certain inventory lists with other users so that we
   can collaborate on managing shared inventory items.
+
+### Sprint 1
+
+- Maria: Repository setup, Vercel deployment, Inventory Search component, styling, App integration
+
+- Stacy: Project Initialization, Low Stock Alert and styling, 
+
+- Lindsay: Project README, App Stylesheet and Style Guide,
