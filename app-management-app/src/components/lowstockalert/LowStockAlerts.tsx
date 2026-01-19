@@ -1,3 +1,5 @@
+import "./lowStockAlert.css"
+
 interface InventoryItem {
   id: string;
   name: string;

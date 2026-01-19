@@ -1,0 +1,29 @@
+.low-stock-alerts {
+  font-family: "Fira Sans", Arial, sans-serif;
+  font-size: 1rem;
+  color: #2F4F4F;
+  background-color: #FFFFFF;
+}
+
+.low-stock-alerts h2 {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 1.5rem;
+  color: #127b7b;
+}
+
+.low-stock-alerts table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.low-stock-alerts th,
+.low-stock-alerts td {
+  padding: 0.5rem;
+  border: 1px solid #2F4F4F;
+  text-align: left;
+}
+
+.low-stock-alerts th {
+  background-color: #2F4F4F;
+  color: #FFFFFF;
+}
