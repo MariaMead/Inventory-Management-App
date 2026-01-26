@@ -11,7 +11,7 @@ import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
 function App() {
   //initializes state with imported data
   // This is top level to be used in any child components
-  const [ inventory ] = useState<InventoryItem[]>(dataInventory);
+  const [ inventory, setInventoryList ] = useState<InventoryItem[]>(dataInventory);
 
   return (
     <>
