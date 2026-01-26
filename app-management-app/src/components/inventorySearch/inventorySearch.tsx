@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
+import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
 
-interface InventoryItem {
+export interface InventoryItem {
     id: string;
     name: string;
     category: string;
@@ -9,7 +11,7 @@ interface InventoryItem {
     price: number;
 }
 //Test data for Inventory list
-const dataInventory: InventoryItem[] = [
+ export const dataInventory: InventoryItem[] = [
 { id: "1", name: "Apple", category: "Fruit", quantity: 50, price: 0.5 },
   { id: "2", name: "Banana", category: "Fruit", quantity: 30, price: 0.25 },
   { id: "3", name: "Carrot", category: "Vegetable", quantity: 40, price: 0.3 },
@@ -21,7 +23,18 @@ const dataInventory: InventoryItem[] = [
 // Function to filter inventory by text in a search field
 function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem[]}) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const {search, setSearch, filteredText} = useSearchFilter(inventory, "name");
+    const [items, setInventoryList] = useState<InventoryItem[]>(inventory);
+    const {search, setSearch, filteredText} = useSearchFilter(items, "name");
+   
+    const addInventoryItem = (item: InventoryItem): void => {
+        setInventoryList((prev) => [
+            ...prev, 
+            {
+                ...item,
+                id: String(prev.length + 1)
+            }
+        ]);
+    }
 
     return(
         // Inventory section to show a table of inventory items
@@ -36,6 +49,9 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
                         setSearch(text.target.value)}
                 />    
             </label>
+            <AddInventoryItemForm 
+            addInventoryItem={addInventoryItem}
+            inventory={items}/>
 
             <table className="inventoryTable">
                 <thead>
