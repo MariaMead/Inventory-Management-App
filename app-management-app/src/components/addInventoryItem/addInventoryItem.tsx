@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { InventoryItem } from "../inventorySearch/inventorySearch";
+import "./addInventoryItem.css"
 
 export function AddInventoryItemForm({
     addInventoryItem
 }: {
     inventory: InventoryItem[],
-    addInventoryItem: (item: InventoryItem) => void
+    addInventoryItem: (item: Omit<InventoryItem, "id">) => void
 }) {
     const [name, setName] = useState<string>("");
     const [ category, setCategory ] = useState<string>("");
@@ -45,51 +46,59 @@ export function AddInventoryItemForm({
     };
 
     return(
-        <form onSubmit={formSubmit}>
-            <div>
-                <label>Item Name:</label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                />
-            </div>
+        <div className="inventory-form">
+            <h3 className="title">Add Inventory Items</h3>
+            <form onSubmit={formSubmit}>
+                <div className="item-data">
+                    <label htmlFor="item-name">Item Name:</label>
+                    <input
+                        id="item-name"
+                        type="text"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                    />
+                </div>
 
-            <div>
-                <label>Category:</label>
-                <input
-                    type="text"
-                    value={category}
-                    onChange={(event) => setCategory(event.target.value)}
-                />
-            </div>
+                <div className="item-data">
+                    <label htmlFor="item-category">Category:</label>
+                    <input
+                        id="item-category"
+                        type="text"
+                        value={category}
+                        onChange={(event) => setCategory(event.target.value)}
+                    />
+                </div>
 
-            <div>
-                <label>Quantity:</label>
-                <input
-                    type="number"
-                    value={quantity}
-                    onChange={(event) => setQuantity(event.target.valueAsNumber)}
-                />
-            </div>
+                <div className="item-data">
+                    <label htmlFor="item-quantity">Quantity:</label>
+                    <input
+                        id="item-quantity"
+                        type="number"
+                        value={quantity}
+                        onChange={(event) => setQuantity(event.target.valueAsNumber)}
+                    />
+                </div>
 
-            <div>
-                <label>Price:</label>
-                <input
-                    type="number"
-                    value={price}
-                    onChange={(event) => setQuantity(event.target.valueAsNumber)}
-                />
-            </div>
+                <div className="item-data">
+                    <label htmlFor="item-price">Price:</label>
+                    <input
+                        id="item-price"
+                        type="number"
+                        value={price}
+                        onChange={(event) => setPrice(event.target.valueAsNumber)}
+                    />
+                </div>
 
-            <div>
-                {error && <p>{error}</p>}
-            </div>
-            <input
-                type="submit"
-                className="submitButton"
-                disabled={!name || !category || !quantity || !price}
-            />
-        </form>
+                <div>
+                    {error && <p>{error}</p>}
+                </div>
+                <input
+                    type="submit"
+                    className="submitButton"
+                    value="Add"
+                    disabled={!name || !category || !quantity || !price}
+                />
+            </form>
+        </div>
     )
 }

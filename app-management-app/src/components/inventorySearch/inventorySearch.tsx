@@ -26,7 +26,7 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
     const [items, setInventoryList] = useState<InventoryItem[]>(inventory);
     const {search, setSearch, filteredText} = useSearchFilter(items, "name");
    
-    const addInventoryItem = (item: InventoryItem): void => {
+    const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
         setInventoryList((prev) => [
             ...prev, 
             {

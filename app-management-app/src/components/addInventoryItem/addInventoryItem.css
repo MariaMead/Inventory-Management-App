@@ -1,0 +1,41 @@
+.inventory-form {
+    max-width: 975px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 2px solid  #127b7b;
+    padding: 5px;
+    align-content: auto;
+
+}
+
+.title {
+    text-align: center;
+    color:  #2F4F4F;
+    margin: 5px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  padding: 5px;
+  margin-left: 20px;
+}
+
+label, input {
+  padding: 5px 0px 8px 0px;
+  display: flex;
+  font-weight: bold;
+  font-size: var(--general-font-size);
+}
+
+.item-data {
+    width: 100%;
+    max-width: 175px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
