@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
@@ -21,11 +20,15 @@ export interface InventoryItem {
 
 
 // Function to filter inventory by text in a search field
-function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem[]}) {
+function InventorySearch({
+    inventory = dataInventory,
+    setInventoryList
+}: {
+    inventory?: InventoryItem[],
+    setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+}) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const [items, setInventoryList] = useState<InventoryItem[]>(inventory);
-    const {search, setSearch, filteredText} = useSearchFilter(items, "name");
-   
+    const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
     const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
         setInventoryList((prev) => [
             ...prev, 
@@ -51,7 +54,7 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
             </label>
             <AddInventoryItemForm 
             addInventoryItem={addInventoryItem}
-            inventory={items}/>
+            />
 
             <table className="inventoryTable">
                 <thead>

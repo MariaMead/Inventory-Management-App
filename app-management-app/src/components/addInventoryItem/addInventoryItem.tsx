@@ -5,7 +5,6 @@ import "./addInventoryItem.css"
 export function AddInventoryItemForm({
     addInventoryItem
 }: {
-    inventory: InventoryItem[],
     addInventoryItem: (item: Omit<InventoryItem, "id">) => void
 }) {
     const [name, setName] = useState<string>("");
@@ -18,23 +17,23 @@ export function AddInventoryItemForm({
         event.preventDefault();
         setError("");
 
-        if(!name) {
-            setError("Name of item cannot be blank");
+        if(!name || name.length < 3) {
+            setError("Name of item cannot be blank and must have more then 3 characters.");
             return;
         }
 
-        if(!category) {
-            setError("Must have a category.");
+        if(!category || category.length < 3) {
+            setError("Must have a category and have more then 3 characters.");
             return;
         }
 
-        if(!quantity) {
-            setError("Must have a quantity");
+        if(!quantity || quantity <= 0) {
+            setError("Must have a quantity and be greater than 0");
             return;
         }
 
-        if(!price) {
-            setError("Must have a price");
+        if(!price || price <= 0) {
+            setError("Must have a price and be greater than 0");
             return;
         }
 
