@@ -1,6 +1,8 @@
 import "./lowStockAlert.css"
+import type { InventoryItem } from "../../Inventory/inventoryData";
+import { dataInventory } from '../../Inventory/inventoryData';
 
-interface InventoryItem {
+/**interface InventoryItem {
   id: string;
   name: string;
   category: string;
@@ -42,12 +44,12 @@ const mockInventory: InventoryItem[] = [
     price: 5.0,
     lowStockThreshold: 5
   }
-];
+];  **/
 
 function LowStockAlerts({
-  inventory = mockInventory
+  inventory = dataInventory
 }: {
-  inventory?: InventoryItem[];
+  inventory: InventoryItem[];
 }) {
   const lowStockItems = inventory.filter(
     item => item.quantity <= item.lowStockThreshold
