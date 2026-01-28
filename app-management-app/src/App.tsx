@@ -16,7 +16,10 @@ function App() {
   return (
     <>
       {/*Inventory Search component */}
-      <InventorySearch inventory={inventory}/>
+      <InventorySearch 
+      inventory={inventory}
+      setInventoryList={setInventoryList}
+      />
       
       <LowStockAlerts inventory={inventory}/>
     </>
