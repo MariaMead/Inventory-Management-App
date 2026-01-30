@@ -21,7 +21,10 @@ function App() {
       setInventoryList={setInventoryList}
       />
       
-      <LowStockAlerts inventory={inventory}/>
+      <LowStockAlerts 
+      inventory={inventory}
+      setInventoryList={setInventoryList}
+      />
     </>
   );
 };

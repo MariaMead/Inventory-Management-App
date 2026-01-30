@@ -6,10 +6,12 @@ import type React from "react";
 
 // Function to filter inventory by text in a search field
 function InventorySearch({
-        inventory
+        inventory,
+        setInventoryList: _setInventoryList
     }: 
     {
-        inventory: InventoryItem[]
+        inventory: InventoryItem[],
+        setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
     }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
     const {search, setSearch, filteredText} = useSearchFilter(inventory, "name");
@@ -27,6 +29,7 @@ function InventorySearch({
                         setSearch(text.target.value)}
                 />    
             </label>
+
 
             <table className="inventoryTable">
                 <thead>
