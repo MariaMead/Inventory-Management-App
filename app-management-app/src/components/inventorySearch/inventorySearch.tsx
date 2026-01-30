@@ -1,33 +1,20 @@
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
-import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
 
-export interface InventoryItem {
-    id: string;
-    name: string;
-    category: string;
-    quantity: number;
-    price: number;
-    lowStockThreshold?: number;
-}
-//Test data for Inventory list
- export const dataInventory: InventoryItem[] = [
-{ id: "1", name: "Apple", category: "Fruit", quantity: 50, price: 0.5, lowStockThreshold:10},
-  { id: "2", name: "Banana", category: "Fruit", quantity: 30, price: 0.25, lowStockThreshold:10 },
-  { id: "3", name: "Carrot", category: "Vegetable", quantity: 40, price: 0.3, lowStockThreshold:8 },
-  { id: "4", name: "Broccoli", category: "Vegetable", quantity: 20, price: 0.75, lowStockThreshold: 10 },
-  { id: "5", name: "Chicken Breast", category: "Meat", quantity: 15, price: 5.0, lowStockThreshold: 5 }
-];
+import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
+import type { InventoryItem } from "../../Inventory/inventoryData";
+import type React from "react";
 
 
 // Function to filter inventory by text in a search field
 function InventorySearch({
-    inventory = dataInventory,
-    setInventoryList
-}: {
-    inventory?: InventoryItem[],
-    setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
-}) {
+        inventory,
+        setInventoryList
+    }: 
+    {
+        inventory: InventoryItem[],
+        setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+    }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
     const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
     const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
@@ -56,6 +43,7 @@ function InventorySearch({
             <AddInventoryItemForm 
             addInventoryItem={addInventoryItem}
             />
+
 
             <table className="inventoryTable">
                 <thead>

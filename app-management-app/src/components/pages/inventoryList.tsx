@@ -1,4 +1,4 @@
-import type { InventoryItem } from "../inventorySearch/inventorySearch";
+import type { InventoryItem } from "../../Inventory/inventoryData";
 import  InventorySearch from "../inventorySearch/inventorySearch";
 
 
