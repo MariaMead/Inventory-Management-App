@@ -24,7 +24,7 @@ function App() {
                                                  setInventoryList={setInventoryList}/>} />
       <Route path="/inventory-search" element={<InventorySearch
                                                  inventory={inventory}
-                                                 setInventoryList={setInventoryList} />
+                                                 setInventoryList={setInventoryList}/>} />
     </Routes>
   );
 };
