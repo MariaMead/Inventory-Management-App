@@ -11,6 +11,7 @@ export function AddInventoryItemForm({
     const [ category, setCategory ] = useState<string>("");
     const [ quantity, setQuantity ] = useState<number>(0);
     const [ price, setPrice ] = useState<number>(0);
+    const [ lowStockThreshold, setLowThreshold] = useState<number>(0);
     const [ error, setError ] = useState<string>("");
 
     const formSubmit = (event:React.FormEvent<HTMLFormElement>) => {
@@ -37,11 +38,17 @@ export function AddInventoryItemForm({
             return;
         }
 
+        if(!lowStockThreshold) {
+            setError("Must set a low stock threshold.");
+            return;
+        }
+
         addInventoryItem({ name, category, quantity, price});
         setName("");
         setCategory("");
         setQuantity(0);
         setPrice(0);
+        setLowThreshold(0);
     };
 
     return(
@@ -49,7 +56,7 @@ export function AddInventoryItemForm({
             <h3 className="title">Add Inventory Items</h3>
             <form onSubmit={formSubmit}>
                 <div className="item-data">
-                    <label htmlFor="item-name">Item Name:</label>
+                    <label htmlFor="item-name">Item Name</label>
                     <input
                         id="item-name"
                         type="text"
@@ -59,7 +66,7 @@ export function AddInventoryItemForm({
                 </div>
 
                 <div className="item-data">
-                    <label htmlFor="item-category">Category:</label>
+                    <label htmlFor="item-category">Category</label>
                     <input
                         id="item-category"
                         type="text"
@@ -69,7 +76,7 @@ export function AddInventoryItemForm({
                 </div>
 
                 <div className="item-data">
-                    <label htmlFor="item-quantity">Quantity:</label>
+                    <label htmlFor="item-quantity">Quantity</label>
                     <input
                         id="item-quantity"
                         type="number"
@@ -79,12 +86,22 @@ export function AddInventoryItemForm({
                 </div>
 
                 <div className="item-data">
-                    <label htmlFor="item-price">Price:</label>
+                    <label htmlFor="item-price">Price</label>
                     <input
                         id="item-price"
                         type="number"
                         value={price}
                         onChange={(event) => setPrice(event.target.valueAsNumber)}
+                    />
+                </div>
+
+                <div className="item-data">
+                    <label htmlFor="item-lowThreshold">Low Threshold</label>
+                    <input
+                        id="item-lowThreshold"
+                        type="number"
+                        value={lowStockThreshold}
+                        onChange={(event) => setLowThreshold(event.target.valueAsNumber)}
                     />
                 </div>
 
@@ -95,7 +112,7 @@ export function AddInventoryItemForm({
                     type="submit"
                     className="submitButton"
                     value="Add"
-                    disabled={!name || !category || !quantity || !price}
+                    disabled={!name || !category || !quantity || !price || !lowStockThreshold}
                 />
             </form>
         </div>

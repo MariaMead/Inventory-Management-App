@@ -1,5 +1,5 @@
 .inventory-form {
-    max-width: 975px;
+    max-width: 980px;
     width: 100%;
     margin: 0 auto;
     border-radius: 10px;
@@ -18,7 +18,7 @@
 form {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5em;
+  gap: 1.0em;
   padding: 5px;
   margin-left: 20px;
 }
@@ -32,7 +32,7 @@ label, input {
 
 .item-data {
     width: 100%;
-    max-width: 175px;
+    max-width: 150px;
     display: flex;
     flex-direction: column;
 
