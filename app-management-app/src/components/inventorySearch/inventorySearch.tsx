@@ -17,6 +17,8 @@ function InventorySearch({
     }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
     const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
+    // Adding inventory item to bottom of list with last number + 1 for Id
+    // will need to be adjusted when database introduced
     const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
         setInventoryList((prev) => [
             ...prev, 
