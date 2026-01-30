@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { InventoryItem } from "../inventorySearch/inventorySearch";
+import type { InventoryItem } from "../../Inventory/inventoryData";
 import "./addInventoryItem.css"
 
 export function AddInventoryItemForm({
@@ -43,7 +43,7 @@ export function AddInventoryItemForm({
             return;
         }
 
-        addInventoryItem({ name, category, quantity, price});
+        addInventoryItem({ name, category, quantity, price, lowStockThreshold});
         setName("");
         setCategory("");
         setQuantity(0);
