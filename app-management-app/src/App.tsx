@@ -7,6 +7,8 @@ import "./components/inventorySearch/inventorySearch.css"
 import InventorySearch from './components/inventorySearch/inventorySearch';
 import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
+import { Route, Routes } from 'react-router';
+import Layout from './common/Layout';
 
 function App() {
   //initializes state with imported data
@@ -14,18 +16,16 @@ function App() {
   const [ inventory, setInventoryList ] = useState<InventoryItem[]>(dataInventory);
 
   return (
-    <>
-      {/*Inventory Search component */}
-      <InventorySearch 
-      inventory={inventory}
-      setInventoryList={setInventoryList}
-      />
-      
-      <LowStockAlerts 
-      inventory={inventory}
-      setInventoryList={setInventoryList}
-      />
-    </>
+    
+    <Routes>
+      <Route element={<Layout />} />
+      <Route path="/low-stock-alerts" element={<LowStockAlerts
+                                                 inventory={inventory}
+                                                 setInventoryList={setInventoryList}/>} />
+      <Route path="/inventory-search" element={<InventorySearch
+                                                 inventory={inventory}
+                                                 setInventoryList={setInventoryList}/>} />
+    </Routes>
   );
 };
 

@@ -13,4 +13,4 @@ export function useSearchFilter(items: any[], key: string) {
     );
     
     return { search, setSearch, filteredText};
-}
+}  
