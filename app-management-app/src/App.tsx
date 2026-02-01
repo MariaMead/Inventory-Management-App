@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import './App.css'
 import type { InventoryItem } from "./Inventory/inventoryData";
 import { dataInventory } from './Inventory/inventoryData';
