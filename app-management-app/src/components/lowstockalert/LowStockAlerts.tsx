@@ -1,4 +1,6 @@
 import "./lowStockAlert.css"
+import type { InventoryItem } from "../../Inventory/inventoryData";
+import type React from "react";
 
 interface InventoryItem {
   id: string;
@@ -28,10 +30,10 @@ function QuantityEditor({
 
 function LowStockAlerts({
   inventory,
-  setInventory
+  setInventoryList
 }: {
   inventory: InventoryItem[];
-  setInventory: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+  setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
 }) {
   const lowStockItems = inventory.filter(
     item => item.quantity <= item.lowStockThreshold
@@ -59,7 +61,7 @@ function LowStockAlerts({
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-
+                  
                     <td>
                       <QuantityEditor
                         value={item.quantity}
@@ -69,12 +71,26 @@ function LowStockAlerts({
                               ? { ...invItem, quantity: newQuantity }
                               : invItem
                           );
-                          setInventory(updatedInventory);
+                          setInventoryList(updatedInventory);
                         }}
                       />
                     </td>
                     <td>
                       {item.quantity === 0 ? "Out of Stock" : "Low Stock"}
+                    </td>
+
+                    <td>
+                      <button
+                        onClick={() =>
+                          setInventoryList((prev) =>
+                          prev.filter((InventoryItem) => 
+                            InventoryItem.id !== item.id
+                          )
+                        )
+                      }
+                      > 
+                        Remove
+                      </button>
                     </td>
                   </tr>
                 ))}
