@@ -9,45 +9,29 @@ interface InventoryItem {
   lowStockThreshold: number;
 }
 
-const mockInventory: InventoryItem[] = [
-  {
-    id: "1",
-    name: "Apple",
-    category: "Fruit",
-    quantity: 5,
-    price: 1.0,
-    lowStockThreshold: 10
-  },
-  {
-    id: "2",
-    name: "Banana",
-    category: "Fruit",
-    quantity: 30,
-    price: 0.25,
-    lowStockThreshold: 10
-  },
-  {
-    id: "3",
-    name: "Carrot",
-    category: "Vegetable",
-    quantity: 3,
-    price: 0.3,
-    lowStockThreshold: 8
-  },
-  {
-    id: "4",
-    name: "Chicken Breast",
-    category: "Meat",
-    quantity: 0,
-    price: 5.0,
-    lowStockThreshold: 5
-  }
-];
+function QuantityEditor({
+  value,
+  onChange
+}: {
+  value: number;
+  onChange: (newValue: number) => void;
+}) {
+  return (
+    <input
+      type="number"
+      min={0}
+      value={value}
+      onChange={e => onChange(Number(e.target.valueAsNumber))}
+    />
+  );
+}
 
 function LowStockAlerts({
-  inventory = mockInventory
+  inventory,
+  setInventory
 }: {
-  inventory?: InventoryItem[];
+  inventory: InventoryItem[];
+  setInventory: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
 }) {
   const lowStockItems = inventory.filter(
     item => item.quantity <= item.lowStockThreshold
@@ -75,7 +59,20 @@ function LowStockAlerts({
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
-                    <td>{item.quantity}</td>
+
+                    <td>
+                      <QuantityEditor
+                        value={item.quantity}
+                        onChange={newQuantity => {
+                          const updatedInventory = inventory.map(invItem =>
+                            invItem.id === item.id
+                              ? { ...invItem, quantity: newQuantity }
+                              : invItem
+                          );
+                          setInventory(updatedInventory);
+                        }}
+                      />
+                    </td>
                     <td>
                       {item.quantity === 0 ? "Out of Stock" : "Low Stock"}
                     </td>
