@@ -4,9 +4,10 @@ import './App.css'
 import type { InventoryItem } from "./Inventory/inventoryData";
 import { dataInventory } from './Inventory/inventoryData';
 import "./components/inventorySearch/inventorySearch.css"
-import InventorySearch from './components/inventorySearch/inventorySearch';
 import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
+import InventorySearch from "./components/inventorySearch/inventorySearch";
+
 import { Route, Routes } from 'react-router';
 import Layout from './common/Layout';
 
@@ -26,6 +27,7 @@ function App() {
                                                  inventory={inventory}
                                                  setInventoryList={setInventoryList}/>} />
     </Routes>
+
   );
 };
 
