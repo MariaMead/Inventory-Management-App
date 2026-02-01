@@ -15,7 +15,7 @@ function QuantityEditor({
       type="number"
       min={0}
       value={value}
-      onChange={e => onChange(Number(e.target.valueAsNumber))}
+      onChange={e => onChange(Number(e.target.value))}
     />
   );
 }
