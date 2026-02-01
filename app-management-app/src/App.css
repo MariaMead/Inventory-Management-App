@@ -5,4 +5,29 @@
   text-align: center;
 }
 
+input[type="text"], [type="number"] {
+  font-weight: bold;
+  font-family: 'Fira Sans', Arial, sans-serif;;
+  color: var(--accent-color);
+  background-color: var(--primary-color);
+  
+}
+.submitButton {
+    height: 30px;
+    width: 75px;
+    padding: 0px 10px;
+    font-size: 16px;
+    align-self: flex-end;
+    color: #ffffff;
+    background-color: #2F4F4F;
+}
 
+.submitButton:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.submitButton:not(:disabled):hover {
+  background-color: #127b7b;
+}

@@ -30,3 +30,17 @@
     color: #FFFFFF;
 }
 
+.searchLabel {
+    font-size: var(--general-font-size);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+
+}
+
+input {
+    font-size: var(--general-font-size);
+    gap: 10px;
+}

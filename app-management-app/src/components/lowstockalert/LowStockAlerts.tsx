@@ -2,14 +2,6 @@ import "./lowStockAlert.css"
 import type { InventoryItem } from "../../Inventory/inventoryData";
 import type React from "react";
 
-interface InventoryItem {
-  id: string;
-  name: string;
-  category: string;
-  quantity: number;
-  price: number;
-  lowStockThreshold: number;
-}
 
 function QuantityEditor({
   value,

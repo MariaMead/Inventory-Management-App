@@ -1,27 +1,33 @@
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 
-interface InventoryItem {
-    id: string;
-    name: string;
-    category: string;
-    quantity: number;
-    price: number;
-}
-//Test data for Inventory list
-const dataInventory: InventoryItem[] = [
-{ id: "1", name: "Apple", category: "Fruit", quantity: 50, price: 0.5 },
-  { id: "2", name: "Banana", category: "Fruit", quantity: 30, price: 0.25 },
-  { id: "3", name: "Carrot", category: "Vegetable", quantity: 40, price: 0.3 },
-  { id: "4", name: "Broccoli", category: "Vegetable", quantity: 20, price: 0.75 },
-  { id: "5", name: "Chicken Breast", category: "Meat", quantity: 15, price: 5.0 }
-];
+import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
+import type { InventoryItem } from "../../Inventory/inventoryData";
+import type React from "react";
 
 
 // Function to filter inventory by text in a search field
-function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem[]}) {
+function InventorySearch({
+        inventory,
+        setInventoryList
+    }: 
+    {
+        inventory: InventoryItem[],
+        setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+    }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const {search, setSearch, filteredText} = useSearchFilter(inventory, "name");
+    const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
+    // Adding inventory item to bottom of list with last number + 1 for Id
+    // will need to be adjusted when database introduced
+    const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
+        setInventoryList((prev) => [
+            ...prev, 
+            {
+                ...item,
+                id: String(prev.length + 1)
+            }
+        ]);
+    }
 
     return(
         // Inventory section to show a table of inventory items
@@ -36,6 +42,10 @@ function InventorySearch({inventory = dataInventory}: {inventory?: InventoryItem
                         setSearch(text.target.value)}
                 />    
             </label>
+            <AddInventoryItemForm 
+            addInventoryItem={addInventoryItem}
+            />
+
 
             <table className="inventoryTable">
                 <thead>
