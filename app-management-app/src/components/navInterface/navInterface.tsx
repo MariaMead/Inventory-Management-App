@@ -33,6 +33,7 @@ function NavInterface() {
     <nav className="navbar">
       <div className="navbar-container">
         <ul className="navbar-menu">
+          <li><NavLink to="/profile">Profile</NavLink></li>
           <li><NavLink to="/inventory-search">Inventory Search</NavLink></li>
           <li><NavLink to="/low-stock-alerts">Low Stock Alerts</NavLink></li>
         </ul>
