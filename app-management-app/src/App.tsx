@@ -9,6 +9,7 @@ import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
 import { Route, Routes } from 'react-router';
 import Layout from './common/Layout';
+import NavInterface from './components/navInterface/navInterface';
 
 function App() {
   //initializes state with imported data
@@ -18,6 +19,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
+        <Route path="/" element={<NavInterface />} />
         <Route path="/low-stock-alerts" element={<LowStockAlerts
                                                    inventory={inventory}
                                                    setInventoryList={setInventoryList}/>} />
