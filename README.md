@@ -25,3 +25,11 @@
 - Stacy: Project Initialization, Low Stock Alert and styling, 
 
 - Lindsay: Project README, App Stylesheet and Style Guide,
+
+### Sprint 2
+
+- Maria: Shared state between pages, add inventory feature and page.
+
+- Lindsay: Navigation interface, profile feature page
+
+- Stacy: Multi-page nav and adding low stock feature and page
