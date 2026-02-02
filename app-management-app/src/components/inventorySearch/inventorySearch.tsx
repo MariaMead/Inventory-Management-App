@@ -7,7 +7,7 @@ import type React from "react";
 // Function to filter inventory by text in a search field
 function InventorySearch({
         inventory,
-        setInventoryList: _setInventoryList
+        setInventoryList
     }: 
     {
         inventory: InventoryItem[],

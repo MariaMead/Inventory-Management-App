@@ -54,6 +54,7 @@ function NavInterface() {
         </div>
 
         <ul className={`navbar-mobile-menu ${isOpen ? 'active' : ''}`} ref={menuRef}>
+          <li><NavLink to="/profile" onClick={closeMenu}>Profile</NavLink></li>
           <li><NavLink to="/inventory-search" onClick={closeMenu}>Inventory Search</NavLink></li>
           <li><NavLink to="/low-stock-alerts" onClick={closeMenu}>Low Stock Alerts</NavLink></li>
           <li>
