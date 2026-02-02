@@ -1,14 +1,15 @@
 import { useState } from "react";
-
 import './App.css'
 import type { InventoryItem } from "./Inventory/inventoryData";
 import { dataInventory } from './Inventory/inventoryData';
 import "./components/inventorySearch/inventorySearch.css"
-import InventorySearch from './components/inventorySearch/inventorySearch';
 import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
+import InventorySearch from "./components/inventorySearch/inventorySearch";
+
 import { Route, Routes } from 'react-router';
 import Layout from './common/Layout';
+import ProfilePage from './components/profilePage/profilePage';
 import NavInterface from './components/navInterface/navInterface';
 
 function App() {
@@ -26,8 +27,10 @@ function App() {
         <Route path="/inventory-search" element={<InventorySearch
                                                    inventory={inventory}
                                                    setInventoryList={setInventoryList}/>} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>
+
   );
 };
 

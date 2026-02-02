@@ -33,6 +33,7 @@ function NavInterface() {
     <nav className="navbar">
       <div className="navbar-container">
         <ul className="navbar-menu">
+          <li><NavLink to="/profile">Profile</NavLink></li>
           <li><NavLink to="/inventory-search">Inventory Search</NavLink></li>
           <li><NavLink to="/low-stock-alerts">Low Stock Alerts</NavLink></li>
         </ul>
@@ -53,6 +54,7 @@ function NavInterface() {
         </div>
 
         <ul className={`navbar-mobile-menu ${isOpen ? 'active' : ''}`} ref={menuRef}>
+          <li><NavLink to="/profile" onClick={closeMenu}>Profile</NavLink></li>
           <li><NavLink to="/inventory-search" onClick={closeMenu}>Inventory Search</NavLink></li>
           <li><NavLink to="/low-stock-alerts" onClick={closeMenu}>Low Stock Alerts</NavLink></li>
           <li>
