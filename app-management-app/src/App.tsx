@@ -16,15 +16,15 @@ function App() {
   const [ inventory, setInventoryList ] = useState<InventoryItem[]>(dataInventory);
 
   return (
-    
     <Routes>
-      <Route element={<Layout />} />
-      <Route path="/low-stock-alerts" element={<LowStockAlerts
-                                                 inventory={inventory}
-                                                 setInventoryList={setInventoryList}/>} />
-      <Route path="/inventory-search" element={<InventorySearch
-                                                 inventory={inventory}
-                                                 setInventoryList={setInventoryList}/>} />
+      <Route element={<Layout />}>
+        <Route path="/low-stock-alerts" element={<LowStockAlerts
+                                                   inventory={inventory}
+                                                   setInventoryList={setInventoryList}/>} />
+        <Route path="/inventory-search" element={<InventorySearch
+                                                   inventory={inventory}
+                                                   setInventoryList={setInventoryList}/>} />
+      </Route>
     </Routes>
   );
 };
