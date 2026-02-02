@@ -3,7 +3,8 @@
     font-family: "Fira Sans", Arial, sans-serif;
    font-size: 1rem;
    color: #2F4F4F;
-   background-color: #FFFFFF; 
+   background-color: #FFFFFF;
+   padding-top: 2rem;
 }
 
 .inventory-search h2 {
