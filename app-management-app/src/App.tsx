@@ -9,6 +9,7 @@ import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
 import { Route, Routes } from 'react-router';
 import Layout from './common/Layout';
+import ProfilePage from './components/profilePage/profilePage';
 
 function App() {
   //initializes state with imported data
@@ -24,6 +25,7 @@ function App() {
         <Route path="/inventory-search" element={<InventorySearch
                                                    inventory={inventory}
                                                    setInventoryList={setInventoryList}/>} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );
