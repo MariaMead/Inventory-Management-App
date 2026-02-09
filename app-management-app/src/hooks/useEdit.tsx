@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-export function useEdit() {
+export function useEdit(initialData: Record<string, string>) {
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [data, setData] = useState<{}>({});
+    const [data, setData] = useState<Record<string, string>>(initialData);
 
     //temp data storage
-    const [ tempData, setTempData] = useState(data);
+    const [ tempData, setTempData] = useState<Record<string, string>>(data);
 
     const handleEdit = () => {
         setTempData(data);
@@ -17,7 +17,7 @@ export function useEdit() {
         setIsEditing(false);
     };
 
-    const handCancle = () => {
+    const handCancel = () => {
         setTempData(data);
         setIsEditing(false);
     };
@@ -30,7 +30,7 @@ export function useEdit() {
         isEditing,
         handleEdit,
         handleSave,
-        handCancle,
+        handCancel,
         onChange
     }
 }
