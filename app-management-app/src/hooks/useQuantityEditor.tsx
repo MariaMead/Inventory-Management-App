@@ -7,7 +7,7 @@ import type { InventoryItem } from "../Inventory/inventoryData";
  * Handles local state updates and triggers external service methods for persistence.
  * 
  * @param initialInventory - This is the initial Inventory list
- * @param QuantityServiceMethod - This is a service method to handle business logic to quantity.
+ * @param quantityServiceMethod - This is a service method to handle business logic to quantity.
  * @returns - {
  *  inventory: Is the stateful  data in the inventory list.
  *  setInventoryList: This sets the inventory list.
@@ -18,7 +18,7 @@ import type { InventoryItem } from "../Inventory/inventoryData";
  */
 export function useQuantityEditor(
     initialInventory: InventoryItem[],
-    QuantityServiceMethod:(id: string, newValue: number) => void
+    quantityServiceMethod:(id: string, newValue: number) => void
 ) {
     const [ inventory, setInventoryList ] = useState<InventoryItem[]>(initialInventory);
     
@@ -31,7 +31,7 @@ export function useQuantityEditor(
             )
         );
 
-        QuantityServiceMethod(id, newQuantity);
+        quantityServiceMethod(id, newQuantity);
     };
     
     //Remove inventory low stock item
