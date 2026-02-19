@@ -1,5 +1,5 @@
 import type { InventoryStock } from "../types/inventoryStock";
-//import { stockData }  ;
+import { stockData } from "./stockData";
 
 /**
  * A function to fetch all data from InventoryStock
@@ -46,7 +46,7 @@ export async function updateStock(stock: InventoryStock) {
  * @param newStock - The new item being added to the inventory list
  * @returns - The new stock item added
  */
-export async function addStockInventory(newStock: InventoryStock): Promise<InventoryStock[]>{
+export async function addStockInventory(newStock: InventoryStock): Promise<InventoryStock>{
     // Checks to see if the item matches name, location and manufacturer.
     const exists = stockData.some(item => 
         item.name === newStock.name &&
@@ -60,7 +60,7 @@ export async function addStockInventory(newStock: InventoryStock): Promise<Inven
     } 
     stockData.push(newStock);
     
-    return [...newStock];
+    return {...newStock};
 }
 
 /**
@@ -77,7 +77,7 @@ export async function deleteStockInventoryItem(
         throw new Error(`Failed to fetch item ${stockId}.`);
     } 
     // Filters though new data to ensure Item we looked up is removed
-    stockData = stockData.filter(item => item.id !== stockId); 
+    stockData.filter(item => item.id !== stockId); 
     // returns copy of new data stockId removed.
     return [...stockData];
 }
