@@ -21,7 +21,7 @@ export function getInventoryStockById(stockId: string): InventoryStock {
         throw new Error(`Failed to fetch stock item with ${stockId}`);
     }
 
-    return foundStock;
+    return {...foundStock};
 }
 
 /**
@@ -64,7 +64,8 @@ export async function addStockInventory(newStock: InventoryStock): Promise<Inven
 }
 
 /**
- * A function to fetch an item by its ID and then have it removed from our data.
+ * A function to fetch an item by its ID and then have it removed from 
+ * inventory stock data.
  * @param stockId - The stock item by its ID
  * @returns - A copy of the data without the item ID we removed
  */
