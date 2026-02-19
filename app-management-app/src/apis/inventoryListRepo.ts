@@ -37,7 +37,7 @@ export async function updateInventoryStock(stock: InventoryStock) {
     }
 
     stockData[foundStockIndex] = stock;
-    return stockData[foundStockIndex];
+    return {...stockData[foundStockIndex]};
 }
 
 /**
@@ -48,7 +48,7 @@ export async function updateInventoryStock(stock: InventoryStock) {
  */
 export async function addStockInventory(newStock: InventoryStock): Promise<InventoryStock>{
     // Checks to see if the item matches name, location and manufacturer.
-    const exists = stockData.some(item => 
+    const exists = stockData.some((item: InventoryStock) => 
         item.name === newStock.name &&
         item.location === newStock.location && 
         item.manufacturer === newStock.manufacturer)
