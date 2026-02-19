@@ -6,7 +6,7 @@ import { stockData } from "./stockData";
  * @returns - All data found in InventoryStock[]
  */
 export function fetchAllInventoryStock(): InventoryStock[] {
-    return stockData;
+    return [...stockData];
 }
 
 /**
@@ -29,7 +29,7 @@ export function getInventoryStockById(stockId: string): InventoryStock {
  * @param stock - The stock item to update
  * @returns - The found stock data to update
  */
-export async function updateStock(stock: InventoryStock) {
+export async function updateInventoryStock(stock: InventoryStock) {
     const foundStockIndex = stockData.findIndex(item => item.id === stock.id);
 
     if(foundStockIndex === -1) {
@@ -71,13 +71,14 @@ export async function addStockInventory(newStock: InventoryStock): Promise<Inven
 export async function deleteStockInventoryItem(
     stockId: string
 ): Promise<InventoryStock[]> {
-    const exists = stockData.some(item => item.id === stockId);
+    // Find the index of the stock item by its ID
+    const stockIndex = stockData.findIndex(item => item.id === stockId);
 
-    if(!exists) {
+    if(stockIndex === -1) {
         throw new Error(`Failed to fetch item ${stockId}.`);
     } 
-    // Filters though new data to ensure Item we looked up is removed
-    stockData.filter(item => item.id !== stockId); 
-    // returns copy of new data stockId removed.
+    // removes at the correct index
+    stockData.splice(stockIndex, 1); 
+  
     return [...stockData];
 }
