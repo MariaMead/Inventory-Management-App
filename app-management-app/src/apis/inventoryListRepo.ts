@@ -1,5 +1,5 @@
 import type { InventoryStock } from "../types/inventoryStock";
-import { stockData } from "./stockData";
+import {stockData } from "./stockData";
 
 /**
  * A function to fetch all data from InventoryStock
@@ -15,7 +15,7 @@ export function fetchAllInventoryStock(): InventoryStock[] {
  * @returns - The found stock ID by its ID
  */
 export function getInventoryStockById(stockId: string): InventoryStock {
-    const foundStock = stockData.find(item => item.id === stockId);
+    const foundStock = stockData.find((item: InventoryStock) => item.id === stockId);
 
     if(!foundStock) {
         throw new Error(`Failed to fetch stock item with ${stockId}`);
@@ -30,7 +30,7 @@ export function getInventoryStockById(stockId: string): InventoryStock {
  * @returns - The found stock data to update
  */
 export async function updateInventoryStock(stock: InventoryStock) {
-    const foundStockIndex = stockData.findIndex(item => item.id === stock.id);
+    const foundStockIndex = stockData.findIndex((item: InventoryStock) => item.id === stock.id);
 
     if(foundStockIndex === -1) {
         throw new Error(`Failed to update stock item with ${stock.id}`);
@@ -73,7 +73,7 @@ export async function deleteStockInventoryItem(
     stockId: string
 ): Promise<InventoryStock[]> {
     // Find the index of the stock item by its ID
-    const stockIndex = stockData.findIndex(item => item.id === stockId);
+    const stockIndex = stockData.findIndex((item: InventoryStock) => item.id === stockId);
 
     if(stockIndex === -1) {
         throw new Error(`Failed to fetch item ${stockId}.`);
