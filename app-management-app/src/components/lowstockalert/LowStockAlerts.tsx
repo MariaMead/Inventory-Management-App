@@ -1,5 +1,6 @@
 import "./lowStockAlert.css"
 import type { InventoryItem } from "../../Inventory/inventoryData";
+import { inventoryService } from "../../services/inventoryService";
 import type React from "react";
 
 
@@ -27,9 +28,7 @@ function LowStockAlerts({
   inventory: InventoryItem[];
   setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
 }) {
-  const lowStockItems = inventory.filter(
-    item => item.quantity <= item.lowStockThreshold
-  );
+  const lowStockItems = inventoryService.getLowStockItems(inventory);
 
     return (
         <section className="low-stock-alerts">
