@@ -6,7 +6,7 @@ import {stockData } from "./stockData";
  * @returns - All data found in InventoryStock[]
  */
 export function fetchAllInventoryStock(): InventoryStock[] {
-    return [...stockData];
+    return structuredClone(stockData);
 }
 
 /**
@@ -21,24 +21,9 @@ export function getInventoryStockById(stockId: string): InventoryStock {
         throw new Error(`Failed to fetch stock item with ${stockId}`);
     }
 
-    return {...foundStock};
+    return structuredClone(foundStock);
 }
 
-/**
- * A function to fetch an inventory item by its ID to update.
- * @param stock - The stock item to update
- * @returns - The found stock data to update
- */
-export async function updateInventoryStock(stock: InventoryStock) {
-    const foundStockIndex = stockData.findIndex((item: InventoryStock) => item.id === stock.id);
-
-    if(foundStockIndex === -1) {
-        throw new Error(`Failed to update stock item with ${stock.id}`);
-    }
-
-    stockData[foundStockIndex] = stock;
-    return {...stockData[foundStockIndex]};
-}
 
 /**
  * Function to add a new stock item to a inventory list, only allowing data to be added if
@@ -60,26 +45,6 @@ export async function addStockInventory(newStock: InventoryStock): Promise<Inven
     } 
     stockData.push(newStock);
     
-    return {...newStock};
+    return structuredClone(newStock);
 }
 
-/**
- * A function to fetch an item by its ID and then have it removed from 
- * inventory stock data.
- * @param stockId - The stock item by its ID
- * @returns - A copy of the data without the item ID we removed
- */
-export async function deleteStockInventoryItem(
-    stockId: string
-): Promise<InventoryStock[]> {
-    // Find the index of the stock item by its ID
-    const stockIndex = stockData.findIndex((item: InventoryStock) => item.id === stockId);
-
-    if(stockIndex === -1) {
-        throw new Error(`Failed to fetch item ${stockId}.`);
-    } 
-    // removes at the correct index
-    stockData.splice(stockIndex, 1); 
-  
-    return [...stockData];
-}
