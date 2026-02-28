@@ -15,18 +15,14 @@ import NavInterface from './components/navInterface/navInterface';
 function App() {
   //initializes state with imported data
   // This is top level to be used in any child components
-  const [ inventory, setInventoryList ] = useState<InventoryItem[]>(dataInventory);
+  // const [ inventory, setInventoryList ] = useState<InventoryItem[]>(dataInventory);
 
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<NavInterface />} />
-        <Route path="/low-stock-alerts" element={<LowStockAlerts
-                                                   inventory={inventory}
-                                                   setInventoryList={setInventoryList}/>} />
-        <Route path="/inventory-search" element={<InventorySearch
-                                                   inventory={inventory}
-                                                   setInventoryList={setInventoryList}/>} />
+        <Route path="/low-stock-alerts" element={<LowStockAlerts />} />
+        <Route path="/inventory-search" element={<InventorySearch />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>
