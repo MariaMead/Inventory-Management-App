@@ -2,8 +2,8 @@ import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
-import type { InventoryItem } from "../../Inventory/inventoryData";
-import type React from "react";
+import type { InventoryStock }  from "../../types/inventoryStock";
+import { useState } from "react";
 
 
 // Function to filter inventory by text in a search field
@@ -12,14 +12,16 @@ function InventorySearch({
         setInventoryList
     }: 
     {
-        inventory: InventoryItem[],
-        setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+        inventory: InventoryStock[],
+        setInventoryList: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
     }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
     const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
+
+    const [showForm, setShowForm] = useState(false);
     // Adding inventory item to bottom of list with last number + 1 for Id
     // will need to be adjusted when database introduced
-    const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
+    const addInventoryItem = (item: Omit<InventoryStock, "id">): void => {
         setInventoryList((prev) => [
             ...prev, 
             {
@@ -42,16 +44,28 @@ function InventorySearch({
                         setSearch(text.target.value)}
                 />    
             </label>
-            <AddInventoryItemForm 
-            addInventoryItem={addInventoryItem}
-            />
 
+            {/* A button to toggle the form or hide it when not needed */}
+            <button
+                type="button"
+                className="toggleFormButton"
+                onClick={() => setShowForm(!showForm)}
+            >
+                {showForm ? "Hide Form" : "Add New Item"}
+            </button>
+            {/* We show form and render it to the page*/}
+            {showForm && (
+                <AddInventoryItemForm addInventoryItem={addInventoryItem} />
+            )}
 
             <table className="inventoryTable">
                 <thead>
                     <tr className="header-title">
                         <th>Id</th>
-                        <th>Item</th>
+                        <th>Item Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Manufacturer</th>
                         <th>Category</th>
                         <th>Quantity</th>
                         <th>Price</th>
@@ -63,6 +77,9 @@ function InventorySearch({
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
+                            <td>{item.description}</td>
+                            <td>{item.location}</td>
+                            <td>{item.manufacturer}</td>
                             <td>{item.category}</td>
                             <td>{item.quantity}</td>
                             <td>{item.price.toFixed(2)}</td>
