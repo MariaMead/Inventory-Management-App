@@ -1,13 +1,17 @@
-import type { InventoryStock } from "../../types/inventoryStock";;
+import type { InventoryStock } from "../../types/inventoryStock";
+import { useFormInput } from "../../hooks/useFormInput";
 import "./addInventoryItem.css"
+import {validateName, validateDescription, 
+        validateLocation, validateManufacturer, 
+        validateCategory, validateQuantity, validatePrice} from "../../services/stockService";
 
 export function AddInventoryItemForm({
-    addInventoryItem
+    addInventoryStock,
 }: {
     stockData: InventoryStock[],
-    addInventoryItem: (item: Omit<InventoryStock, "id">) => Promise<string | InventoryStock | null>;
+    addInventoryStock: (item: Omit<InventoryStock, "id">) => Promise<string | InventoryStock | null>;
 }) {
-    const name = useFormInput(valaidateName);
+    const name = useFormInput(validateName);
     const description = useFormInput(validateDescription);
     const location = useFormInput(validateLocation);
     const manufacturer = useFormInput(validateManufacturer);
@@ -26,13 +30,13 @@ export function AddInventoryItemForm({
         const validateQuantity = quantity.validateForm();
         const validatePrice = price.validateForm();
         
-        name.setMessage(validateName.message ?? null);
-        description.setMessage(validateDescription.message ?? null);
-        location.setMessage(validateLocation.message ?? null);
-        manufacturer.setMessage(validateLocation.message ?? null);
-        category.setMessage(validateCategory.message ?? null);
-        quantity.setMessage(validateQuantity.message ?? null);
-        price.setMessage(validatePrice.message ?? null);
+        name.setError(validateName.error ?? null);
+        description.setError(validateDescription.error ?? null);
+        location.setError(validateLocation.error ?? null);
+        manufacturer.setError(validateLocation.error ?? null);
+        category.setError(validateCategory.error ?? null);
+        quantity.setError(validateQuantity.error ?? null);
+        price.setError(validatePrice.error ?? null);
 
         if(!validateName.isValid || !validateDescription.isValid || 
             !validateLocation.isValid || !validateManufacturer.isValid || 
@@ -41,8 +45,14 @@ export function AddInventoryItemForm({
                 return;
         }
 
-        await addInventoryItem(
-            { name, description, location, manufacturer, category, quantity, price }
+        await addInventoryStock({ 
+                name: name.inputValue, 
+                description: description.inputValue, 
+                location: location.inputValue, 
+                manufacturer: manufacturer.inputValue, 
+                category: category.inputValue, 
+                quantity: quantity.inputValue, 
+                price: price.inputValue }
         );
 
         name.setValue("");
@@ -63,10 +73,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-name"
                         type="text"
-                        value={name.value}
+                        value={name.inputValue}
                         onChange={name.onChange}
                     />
-                    {name.message && <p className="error">{name.message}</p>}
+                    {name.error && <p className="error">{name.error}</p>}
                 </div>
 
                  <div className="item-data">
@@ -74,10 +84,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-category"
                         type="text"
-                        value={category.value}
+                        value={category.inputValue}
                         onChange={category.onChange}
                     />
-                    {category.message && <p className="error">{category.message}</p>}
+                    {category.error && <p className="error">{category.error}</p>}
                 </div>
 
                 <div className="item-data">
@@ -85,10 +95,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-manufacturer"
                         type="text"
-                        value={manufacturer.value}
+                        value={manufacturer.inputValue}
                         onChange={manufacturer.onChange}
                     />
-                    {manufacturer.message && <p className="error">{manufacturer.message}</p>}
+                    {manufacturer.error && <p className="error">{manufacturer.error}</p>}
                 </div>
 
                 <div className="item-data">
@@ -96,10 +106,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-location"
                         type="text"
-                        value={location.value}
+                        value={location.inputValue}
                         onChange={location.onChange}
                     />
-                    {location.message && <p className="error">{location.message}</p>}
+                    {location.error && <p className="error">{location.error}</p>}
                 </div>
 
                 <div className="item-data">
@@ -107,10 +117,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-quantity"
                         type="number"
-                        value={quantity.value}
+                        value={quantity.inputValue}
                         onChange={quantity.onChange}
                     />
-                    {quantity.message && <p className="error">{quantity.message}</p>}
+                    {quantity.error && <p className="error">{quantity.error}</p>}
                 </div>
 
                 <div className="item-data">
@@ -118,20 +128,20 @@ export function AddInventoryItemForm({
                     <input
                         id="item-price"
                         type="number"
-                        value={price.value}
+                        value={price.inputValue}
                         onChange={price.onChange}
                     />
-                    {price.message && <p className="error">{price.message}</p>}
+                    {price.error && <p className="error">{price.error}</p>}
                 </div>
 
                     <div className="item-data">
                     <label htmlFor="item-description">Description</label>
                     <textarea
                         id="item-description"
-                        value={description.value}
+                        value={description.inputValue}
                         onChange={description.onChange}
                     />
-                    {description.message && <p className="error">{description.message}</p>}
+                    {description.error && <p className="error">{description.error}</p>}
                 </div>
 
                 <div className="button-cell">

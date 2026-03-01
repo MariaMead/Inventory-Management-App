@@ -1,29 +1,31 @@
+import { useState } from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
-
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
-import type { InventoryStock }  from "../../types/inventoryStock";
-import { useState } from "react";
+import { stockData } from "../../apis/stockData";
+import type { InventoryStock } from "../../types/inventoryStock";
+import { addStockInventory } from "../../apis/inventoryListRepo";
 
 
 // Function to filter inventory by text in a search field
 function InventorySearch({
-        stockList,
-        setInventoryStock
-    }: 
-    {
-        stockList: InventoryStock[],
-        setInventoryStock: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
-    }) {
+    stockList,
+    setInventoryStock
+}: {
+    stockList: InventoryStock[],
+    setInventoryStock: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
+}) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const { search, setSearch, filteredText } = useSearchFilter(stockList, "name");
+    const { search, setSearch, filteredText } = useSearchFilter(stockData, "name");
 
     const [showForm, setShowForm] = useState(false);
     // Adding inventory item to bottom of list with last number + 1 for Id
     // will need to be adjusted when database introduced
-    const addInventoryItem = async(item: Omit<InventoryStock, "id">): Promise<string | InventoryStock> => {
+    const addStockItem = async(
+        item: Omit<InventoryStock, "id">
+    ): Promise<string | InventoryStock> => {
         try {
-            const result = await addInventoryService(item);
+            const result = await addStockInventory(item);
 
             setInventoryStock(prev => [
                 ...prev.filter(
@@ -41,7 +43,6 @@ function InventorySearch({
             }
             return "An unexpected error occurred.";
         }
-        
     }
 
     return(
@@ -70,7 +71,7 @@ function InventorySearch({
             {showForm && (
                 <AddInventoryItemForm
                     stockData={stockList} 
-                    addInventoryItem={addInventoryItem} 
+                    addInventoryStock={addStockItem} 
                 />
             )}
 
