@@ -2,7 +2,7 @@ import type { InventoryStock } from "../types/inventoryStock"
 
 export const stockData: InventoryStock[] = [
     {
-    id: "INV-001",
+    id: "1",
     name: "Wireless Mouse",
     description: "Ergonomic wireless mouse with USB receiver",
     location: "Warehouse A - Shelf 1",
@@ -12,7 +12,7 @@ export const stockData: InventoryStock[] = [
     price: 24.99
   },
   {
-    id: "INV-002",
+    id: "2",
     name: "Mechanical Keyboard",
     description: "RGB backlit mechanical keyboard",
     location: "Warehouse A - Shelf 2",
@@ -22,7 +22,7 @@ export const stockData: InventoryStock[] = [
     price: 79.99
   },
   {
-    id: "INV-003",
+    id: "3",
     name: "27\" Monitor",
     description: "4K UHD IPS display monitor",
     location: "Warehouse B - Rack 3",
@@ -32,7 +32,7 @@ export const stockData: InventoryStock[] = [
     price: 299.99
   },
   {
-    id: "INV-004",
+    id: "4",
     name: "Office Chair",
     description: "Adjustable ergonomic office chair",
     location: "Warehouse C - Section 1",
@@ -42,7 +42,7 @@ export const stockData: InventoryStock[] = [
     price: 499.99
   },
   {
-    id: "INV-005",
+    id: "5",
     name: "Standing Desk",
     description: "Electric height adjustable standing desk",
     location: "Warehouse C - Section 2",
@@ -52,7 +52,7 @@ export const stockData: InventoryStock[] = [
     price: 399.99
   },
   {
-    id: "INV-006",
+    id: "6",
     name: "Laptop Docking Station",
     description: "USB-C multi-port docking station",
     location: "Warehouse A - Shelf 4",
@@ -62,7 +62,7 @@ export const stockData: InventoryStock[] = [
     price: 129.99
   },
   {
-    id: "INV-007",
+    id: "7",
     name: "External Hard Drive 2TB",
     description: "Portable USB 3.0 external hard drive",
     location: "Warehouse B - Rack 2",
@@ -72,7 +72,7 @@ export const stockData: InventoryStock[] = [
     price: 89.99
   },
   {
-    id: "INV-008",
+    id: "8",
     name: "Wireless Router",
     description: "Dual-band WiFi 6 router",
     location: "Warehouse A - Shelf 5",
@@ -82,7 +82,7 @@ export const stockData: InventoryStock[] = [
     price: 149.99
   },
   {
-    id: "INV-009",
+    id: "9",
     name: "Laser Printer",
     description: "Monochrome high-speed laser printer",
     location: "Warehouse B - Rack 1",
@@ -92,7 +92,7 @@ export const stockData: InventoryStock[] = [
     price: 199.99
   },
   {
-    id: "INV-010",
+    id: "10",
     name: "Surge Protector",
     description: "8-outlet power surge protector",
     location: "Warehouse A - Shelf 6",
