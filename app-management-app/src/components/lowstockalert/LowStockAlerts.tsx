@@ -1,7 +1,6 @@
 import "./lowStockAlert.css"
-import { useState } from "react";
 import type { InventoryItem } from "../../Inventory/inventoryData";
-import { inventoryRepository } from "../../repositories/inventoryRepository";
+import type React from "react";
 
 
 function QuantityEditor({
@@ -21,25 +20,16 @@ function QuantityEditor({
   );
 }
 
-function LowStockAlerts() {
-  const [inventory, setInventory] = useState<InventoryItem[]>(() => inventoryRepository.getAll());
-
+function LowStockAlerts({
+  inventory,
+  setInventoryList
+}: {
+  inventory: InventoryItem[];
+  setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+}) {
   const lowStockItems = inventory.filter(
     item => item.quantity <= item.lowStockThreshold
   );
-
-  const updateQuantity = (id: string, newQuantity: number) => {
-    const item = inventoryRepository.getById(id);
-    if (item) {
-      inventoryRepository.update(id, { ...item, quantity: newQuantity });
-      setInventory(inventoryRepository.getAll());
-    }
-  };
-
-  const removeItem = (id: string) => {
-    inventoryRepository.delete(id);
-    setInventory(inventoryRepository.getAll());
-  };
 
     return (
         <section className="low-stock-alerts">
@@ -59,7 +49,7 @@ function LowStockAlerts() {
               </thead>
 
               <tbody className="low-stock-body">
-                {lowStockItems.map((item: InventoryItem) => (
+                {lowStockItems.map(item => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
@@ -67,7 +57,14 @@ function LowStockAlerts() {
                     <td>
                       <QuantityEditor
                         value={item.quantity}
-                        onChange={newQuantity => updateQuantity(item.id, newQuantity)}
+                        onChange={newQuantity => {
+                          const updatedInventory = inventory.map(invItem =>
+                            invItem.id === item.id
+                              ? { ...invItem, quantity: newQuantity }
+                              : invItem
+                          );
+                          setInventoryList(updatedInventory);
+                        }}
                       />
                     </td>
                     <td>
@@ -75,7 +72,15 @@ function LowStockAlerts() {
                     </td>
 
                     <td>
-                      <button onClick={() => removeItem(item.id)}>
+                      <button
+                        onClick={() =>
+                          setInventoryList((prev) =>
+                          prev.filter((InventoryItem) => 
+                            InventoryItem.id !== item.id
+                          )
+                        )
+                      }
+                      > 
                         Remove
                       </button>
                     </td>
