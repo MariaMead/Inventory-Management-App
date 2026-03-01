@@ -1,32 +1,27 @@
+import { useState } from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
 import type { InventoryItem } from "../../Inventory/inventoryData";
-import type React from "react";
+import { inventoryRepository } from "../../repositories/inventoryRepository";
 
 
 // Function to filter inventory by text in a search field
-function InventorySearch({
-        inventory,
-        setInventoryList
-    }: 
-    {
-        inventory: InventoryItem[],
-        setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
-    }) {
+function InventorySearch() {
+    const [inventory, setInventory] = useState<InventoryItem[]>(() => inventoryRepository.getAll());
+
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
     const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
     // Adding inventory item to bottom of list with last number + 1 for Id
     // will need to be adjusted when database introduced
     const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
-        setInventoryList((prev) => [
-            ...prev, 
-            {
-                ...item,
-                id: String(prev.length + 1)
-            }
-        ]);
+        const newItem = {
+            ...item,
+            id: String(inventory.length + 1)
+        };
+        inventoryRepository.add(newItem);
+        setInventory(inventoryRepository.getAll());
     }
 
     return(
