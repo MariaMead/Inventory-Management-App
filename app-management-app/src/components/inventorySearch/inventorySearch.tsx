@@ -19,15 +19,6 @@ function InventorySearch({
     const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
     // Adding inventory item to bottom of list with last number + 1 for Id
     // will need to be adjusted when database introduced
-    const addInventoryItem = (item: Omit<InventoryItem, "id">): void => {
-        setInventoryList((prev) => [
-            ...prev, 
-            {
-                ...item,
-                id: String(prev.length + 1)
-            }
-        ]);
-    }
 
     return(
         // Inventory section to show a table of inventory items
@@ -43,7 +34,8 @@ function InventorySearch({
                 />    
             </label>
             <AddInventoryItemForm 
-            addInventoryItem={addInventoryItem}
+                inventory={inventory}
+                setInventoryList={setInventoryList}
             />
 
 
