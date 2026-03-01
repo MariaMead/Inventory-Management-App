@@ -1,7 +1,7 @@
 import type { InventoryItem } from "../Inventory/inventoryData";
-import { dataInventory } from "../Inventory/inventoryData";
+import { lowStockData } from "./lowStockMockData"; 
 
-let inventoryStore: InventoryItem[] = [...dataInventory];
+let inventoryStore: InventoryItem[] = [...lowStockData];
 
 // Fetch all low stock items
 export function fetchLowStockItems(): InventoryItem[] {
@@ -11,10 +11,12 @@ export function fetchLowStockItems(): InventoryItem[] {
 }
 
 // Get single low stock item by id
-export function getLowStockItemById(id: string): InventoryItem {
+export function getLowStockItemById(
+	id: string
+): InventoryItem {
   	const foundItem = inventoryStore.find(
     	item => item.id === id &&
-            item.quantity <= item.lowStockThreshold
+         	item.quantity <= item.lowStockThreshold
   	);
 
 	if (!foundItem) {
