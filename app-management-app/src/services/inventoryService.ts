@@ -1,5 +1,6 @@
 import type { InventoryItem } from '../Inventory/inventoryData';
 
+
 type ValidationResult = {
     isValid: boolean;
     errors: string[];
@@ -35,7 +36,8 @@ export const inventoryService = {
       isValid: errors.length === 0,
       errors
     };
-  },
+ },
+
 
     addItem(
         inventory: InventoryItem[], 
@@ -68,6 +70,7 @@ export const inventoryService = {
     ): InventoryItem[] {
         return inventory.filter(item => item.id !== id);
 
+
     },
 
     getLowStockItems(
@@ -76,5 +79,6 @@ export const inventoryService = {
         return inventory.filter(
             item => item.quantity <= item.lowStockThreshold
         );
-    },
+    
+    }
 };
