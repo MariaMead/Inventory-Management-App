@@ -8,27 +8,40 @@ import { useState } from "react";
 
 // Function to filter inventory by text in a search field
 function InventorySearch({
-        inventory,
-        setInventoryList
+        stockList,
+        setInventoryStock
     }: 
     {
-        inventory: InventoryStock[],
-        setInventoryList: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
+        stockList: InventoryStock[],
+        setInventoryStock: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
     }) {
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const { search, setSearch, filteredText } = useSearchFilter(inventory, "name");
+    const { search, setSearch, filteredText } = useSearchFilter(stockList, "name");
 
     const [showForm, setShowForm] = useState(false);
     // Adding inventory item to bottom of list with last number + 1 for Id
     // will need to be adjusted when database introduced
-    const addInventoryItem = (item: Omit<InventoryStock, "id">): void => {
-        setInventoryList((prev) => [
-            ...prev, 
-            {
-                ...item,
-                id: String(prev.length + 1)
+    const addInventoryItem = async(item: Omit<InventoryStock, "id">): Promise<string | InventoryStock> => {
+        try {
+            const result = await addInventoryService(item);
+
+            setInventoryStock(prev => [
+                ...prev.filter(
+                    item => 
+                        item.name !== result.name || item.description !== result.description ||
+                        item.location !== result.location || item.manufacturer !== result.manufacturer ||
+                        item.category !== result.category || item.quantity !== result.quantity ||
+                        item.price !== result.price
+                ), {...result}
+            ]);
+            return result;
+        } catch (error: unknown) {
+            if(error instanceof Error) {
+                return error.message;
             }
-        ]);
+            return "An unexpected error occurred.";
+        }
+        
     }
 
     return(
@@ -55,7 +68,10 @@ function InventorySearch({
             </button>
             {/* We show form and render it to the page*/}
             {showForm && (
-                <AddInventoryItemForm addInventoryItem={addInventoryItem} />
+                <AddInventoryItemForm
+                    stockData={stockList} 
+                    addInventoryItem={addInventoryItem} 
+                />
             )}
 
             <table className="inventoryTable">

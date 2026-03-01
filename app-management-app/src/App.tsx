@@ -5,12 +5,12 @@ import { dataInventory } from './Inventory/inventoryData';
 import "./components/inventorySearch/inventorySearch.css"
 import "./components/lowstockalert/lowStockAlert.css"
 import LowStockAlerts from './components/lowstockalert/LowStockAlerts';
-import InventorySearch from "./components/inventorySearch/inventorySearch";
 
 import { Route, Routes } from 'react-router';
 import Layout from './common/Layout';
 import ProfilePage from './components/profilePage/profilePage';
 import NavInterface from './components/navInterface/navInterface';
+import { InventoryList } from "./components/pages/inventoryList";
 
 function App() {
   //initializes state with imported data
@@ -24,9 +24,7 @@ function App() {
         <Route path="/low-stock-alerts" element={<LowStockAlerts
                                                    inventory={inventory}
                                                    setInventoryList={setInventoryList}/>} />
-        <Route path="/inventory-search" element={<InventorySearch
-                                                   inventory={inventory}
-                                                   setInventoryList={setInventoryList}/>} />
+        <Route path="/inventory-search" element={<InventoryList />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>

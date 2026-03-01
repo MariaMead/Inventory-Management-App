@@ -1,55 +1,57 @@
-import { useState } from "react";
-import type { InventoryStock } from "../../types/inventoryStock";
+import type { InventoryStock } from "../../types/inventoryStock";;
 import "./addInventoryItem.css"
 
 export function AddInventoryItemForm({
     addInventoryItem
 }: {
-    addInventoryItem: (item: Omit<InventoryStock, "id">) => void
+    stockData: InventoryStock[],
+    addInventoryItem: (item: Omit<InventoryStock, "id">) => Promise<string | InventoryStock | null>;
 }) {
-    const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-    const [location, setLocation] = useState<string>("");
-    const [ manufacturer, setManufacturer] = useState<string>("");
-    const [ category, setCategory ] = useState<string>("");
-    const [ quantity, setQuantity ] = useState<number>(0);
-    const [ price, setPrice ] = useState<number>(0);
-    const [ error, setError ] = useState<string>("");
+    const name = useFormInput(valaidateName);
+    const description = useFormInput(validateDescription);
+    const location = useFormInput(validateLocation);
+    const manufacturer = useFormInput(validateManufacturer);
+    const category = useFormInput(validateCategory);
+    const quantity = useFormInput(validateQuantity);
+    const price = useFormInput(validatePrice);
 
     const formSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setError("");
+        
+        const validateName = name.validateForm();
+        const validateDescription = description.validateForm();
+        const validateLocation = location.validateForm();
+        const validateManufacturer = manufacturer.validateForm();
+        const validateCategory = category.validateForm();
+        const validateQuantity = quantity.validateForm();
+        const validatePrice = price.validateForm();
+        
+        name.setMessage(validateName.message ?? null);
+        description.setMessage(validateDescription.message ?? null);
+        location.setMessage(validateLocation.message ?? null);
+        manufacturer.setMessage(validateLocation.message ?? null);
+        category.setMessage(validateCategory.message ?? null);
+        quantity.setMessage(validateQuantity.message ?? null);
+        price.setMessage(validatePrice.message ?? null);
 
-        if(!name || name.length < 3) {
-            setError("Name of item cannot be blank and must have more then 3 characters.");
-            return;
+        if(!validateName.isValid || !validateDescription.isValid || 
+            !validateLocation.isValid || !validateManufacturer.isValid || 
+            !validateCategory.isValid || !validateQuantity.isValid || 
+            !validatePrice.isValid) {
+                return;
         }
 
-        if(!category || category.length < 3) {
-            setError("Must have a category and have more then 3 characters.");
-            return;
-        }
+        await addInventoryItem(
+            { name, description, location, manufacturer, category, quantity, price }
+        );
 
-        if(!quantity || quantity <= 0) {
-            setError("Must have a quantity and be greater than 0");
-            return;
-        }
-
-        if(!price || price <= 0) {
-            setError("Must have a price and be greater than 0");
-            return;
-        }
-
-       
-
-        addInventoryItem({ name, description, location, manufacturer, category, quantity, price });
-        setName("");
-        setDescription("");
-        setLocation("");
-        setManufacturer("");
-        setCategory("");
-        setQuantity(0);
-        setPrice(0);
+        name.setValue("");
+        description.setValue("");
+        location.setValue("");
+        manufacturer.setValue("");
+        category.setValue("");
+        quantity.setValue(0);
+        price.setValue(0);
     };
 
     return(
@@ -61,9 +63,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-name"
                         type="text"
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
+                        value={name.value}
+                        onChange={name.onChange}
                     />
+                    {name.message && <p className="error">{name.message}</p>}
                 </div>
 
                  <div className="item-data">
@@ -71,9 +74,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-category"
                         type="text"
-                        value={category}
-                        onChange={(event) => setCategory(event.target.value)}
+                        value={category.value}
+                        onChange={category.onChange}
                     />
+                    {category.message && <p className="error">{category.message}</p>}
                 </div>
 
                 <div className="item-data">
@@ -81,9 +85,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-manufacturer"
                         type="text"
-                        value={manufacturer}
-                        onChange={(event) => setManufacturer(event.target.value)}
+                        value={manufacturer.value}
+                        onChange={manufacturer.onChange}
                     />
+                    {manufacturer.message && <p className="error">{manufacturer.message}</p>}
                 </div>
 
                 <div className="item-data">
@@ -91,9 +96,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-location"
                         type="text"
-                        value={location}
-                        onChange={(event) => setLocation(event.target.value)}
+                        value={location.value}
+                        onChange={location.onChange}
                     />
+                    {location.message && <p className="error">{location.message}</p>}
                 </div>
 
                 <div className="item-data">
@@ -101,9 +107,10 @@ export function AddInventoryItemForm({
                     <input
                         id="item-quantity"
                         type="number"
-                        value={quantity}
-                        onChange={(event) => setQuantity(event.target.valueAsNumber)}
+                        value={quantity.value}
+                        onChange={quantity.onChange}
                     />
+                    {quantity.message && <p className="error">{quantity.message}</p>}
                 </div>
 
                 <div className="item-data">
@@ -111,22 +118,20 @@ export function AddInventoryItemForm({
                     <input
                         id="item-price"
                         type="number"
-                        value={price}
-                        onChange={(event) => setPrice(event.target.valueAsNumber)}
+                        value={price.value}
+                        onChange={price.onChange}
                     />
+                    {price.message && <p className="error">{price.message}</p>}
                 </div>
 
                     <div className="item-data">
                     <label htmlFor="item-description">Description</label>
                     <textarea
                         id="item-description"
-                        value={description}
-                        onChange={(event) => setDescription(event.target.value)}
+                        value={description.value}
+                        onChange={description.onChange}
                     />
-                </div>
-
-                <div>
-                    {error && <p>{error}</p>}
+                    {description.message && <p className="error">{description.message}</p>}
                 </div>
 
                 <div className="button-cell">
