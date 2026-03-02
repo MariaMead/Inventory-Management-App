@@ -13,4 +13,4 @@ export function useSearchFilter<T>(items: T[], key: keyof T) {
     );
     
     return { search, setSearch, filteredText};
-}  
+}
