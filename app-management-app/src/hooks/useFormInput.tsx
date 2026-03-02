@@ -37,7 +37,7 @@ export function useFormInput(
     const validateForm = (): Validation => {
         const errorMessage = formServiceMethod(inputValue);
 
-        if(errorMessage) {
+        if(!errorMessage.isValid) {
             setError(errorMessage.error);
             return { isValid: false, error: errorMessage.error};
         }
