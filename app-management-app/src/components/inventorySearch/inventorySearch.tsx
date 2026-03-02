@@ -1,7 +1,8 @@
-import { useState } from "react";
+import type React from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
+import { useState } from "react";
 import type { InventoryStock } from "../../types/inventoryStock";
 import { addInventoryStock } from "../../services/stockService";
 import { stockData } from "../../apis/stockData";
