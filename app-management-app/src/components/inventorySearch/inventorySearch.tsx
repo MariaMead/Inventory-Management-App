@@ -27,11 +27,15 @@ function InventorySearch() {
             }
 
             setInventoryStock(prev => [
-                ...prev, 
-                result
-            ])
+                ...prev.filter(
+                    item => 
+                        item.name !== result.name || item.description !== result.description ||
+                        item.location !== result.location || item.manufacturer !== result.manufacturer ||
+                        item.category !== result.category || item.quantity !== result.quantity ||
+                        item.price !== result.price
+                ), {...result}
+            ]);
             return result;
-
         } catch (error: unknown) {
             if(error instanceof Error) {
                 return error.message;

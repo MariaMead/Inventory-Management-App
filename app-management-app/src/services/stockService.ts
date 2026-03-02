@@ -45,8 +45,8 @@ export const validateCategory = (value: string | number): Validation => {
 
 export const validateQuantity = (value: string | number): Validation => {
     const quantity = Number(value);
-    if (isNaN(quantity) || quantity < 0) {
-        return { isValid: false, error: "Quantity cannot be negative or non-numeric" };
+    if (isNaN(quantity) || quantity <= 0) {
+        return { isValid: false, error: "Quantity must be greater than 0" };
     }
     return { isValid: true, error: "" };
 }
