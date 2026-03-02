@@ -23,6 +23,19 @@ function LowStockAlerts() {
 	const { items, error, loading, updateQuantity, removeItem } = 
 	useLowStock();
 
+  const updateQuantity = (id: string, newQuantity: number) => {
+    const item = inventoryRepository.getById(id);
+    if (item) {
+      inventoryRepository.update(id, { ...item, quantity: newQuantity });
+      setInventory(inventoryRepository.getAll());
+    }
+  };
+
+  const removeItem = (id: string) => {
+    inventoryRepository.delete(id);
+    setInventory(inventoryRepository.getAll());
+  };
+
     return (
         <section className="low-stock-alerts">
           <h2>Low stock Alert</h2>
