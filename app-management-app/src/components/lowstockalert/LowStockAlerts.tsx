@@ -1,6 +1,5 @@
 import "./lowStockAlert.css"
-import type { InventoryItem } from "../../Inventory/inventoryData";
-import type React from "react";
+import { useLowStock } from "../../hooks/useLowStock";
 
 
 function QuantityEditor({
@@ -20,22 +19,18 @@ function QuantityEditor({
   );
 }
 
-function LowStockAlerts({
-  inventory,
-  setInventoryList
-}: {
-  inventory: InventoryItem[];
-  setInventoryList: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
-}) {
-  const lowStockItems = inventory.filter(
-    item => item.quantity <= item.lowStockThreshold
-  );
+function LowStockAlerts() {
+	const { items, error, loading, updateQuantity, removeItem } = 
+	useLowStock();
 
     return (
         <section className="low-stock-alerts">
           <h2>Low stock Alert</h2>
 
-          {lowStockItems.length === 0? (
+      	{loading && <p>Loading...</p>}
+      	{error && <p className="error">{error}</p>}
+
+          {items.length === 0? (
             <p>All items are sufficiently stocked</p>
           ) : (
             <table>
@@ -49,7 +44,7 @@ function LowStockAlerts({
               </thead>
 
               <tbody className="low-stock-body">
-                {lowStockItems.map(item => (
+                {items.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
                     <td>{item.category}</td>
@@ -58,12 +53,7 @@ function LowStockAlerts({
                       <QuantityEditor
                         value={item.quantity}
                         onChange={newQuantity => {
-                          const updatedInventory = inventory.map(invItem =>
-                            invItem.id === item.id
-                              ? { ...invItem, quantity: newQuantity }
-                              : invItem
-                          );
-                          setInventoryList(updatedInventory);
+                          updateQuantity(item, newQuantity);
                         }}
                       />
                     </td>
@@ -73,13 +63,7 @@ function LowStockAlerts({
 
                     <td>
                       <button
-                        onClick={() =>
-                          setInventoryList((prev) =>
-                          prev.filter((InventoryItem) => 
-                            InventoryItem.id !== item.id
-                          )
-                        )
-                      }
+                        onClick={() => removeItem(item.id)}
                       > 
                         Remove
                       </button>
