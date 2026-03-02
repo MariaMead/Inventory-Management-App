@@ -1,7 +1,8 @@
 import InventorySearch from "../inventorySearch/inventorySearch";
 
 
-export function InventoryList() {
+
+export function InventoryList () {
     return(
         <>
         <main>

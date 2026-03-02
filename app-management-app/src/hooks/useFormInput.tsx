@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Validation = {
+export type Validation = {
     isValid: boolean;
     error: string;
 }
@@ -28,7 +28,7 @@ export function useFormInput(
     const [ inputValue, setValue ] = useState<string | number>(initialState);
     const [ error, setError ] = useState<string | null>(null);
 
-    const onchange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setValue(event.target.value);
         setError(null);
     }
@@ -37,7 +37,7 @@ export function useFormInput(
     const validateForm = (): Validation => {
         const errorMessage = formServiceMethod(inputValue);
 
-        if(errorMessage) {
+        if(!errorMessage.isValid) {
             setError(errorMessage.error);
             return { isValid: false, error: errorMessage.error};
         }
@@ -49,8 +49,9 @@ export function useFormInput(
     return {
         inputValue,
         setValue,
-        onchange,
+        onChange,
         error,
+        setError,
         validateForm,
     }
     
