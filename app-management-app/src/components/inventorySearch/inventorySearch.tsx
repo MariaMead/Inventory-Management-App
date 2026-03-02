@@ -4,7 +4,7 @@ import "./inventorySearch.css";
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
 import { stockData } from "../../apis/stockData";
 import type { InventoryStock } from "../../types/inventoryStock";
-import { addStockInventory } from "../../apis/inventoryListRepo";
+import { addStockInventory } from "../../repositories/inventoryListRepo";
 
 
 // Function to filter inventory by text in a search field

@@ -1,6 +1,6 @@
 import type { Validation } from "../hooks/useFormInput";
 import type { InventoryStock } from "../types/inventoryStock";
-import { addStockInventory } from "../apis/inventoryListRepo";
+import { addStockInventory } from "../repositories/inventoryListRepo";
 import { stockData } from "../apis/stockData";
 
 export const validateName = (value: string | number): Validation => {

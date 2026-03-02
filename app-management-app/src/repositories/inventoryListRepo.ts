@@ -1,5 +1,5 @@
 import type { InventoryStock } from "../types/inventoryStock";
-import {stockData } from "./stockData";
+import {stockData } from "../apis/stockData";
 
 /**
  * A function to fetch all data from InventoryStock

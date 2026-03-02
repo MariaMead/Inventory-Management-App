@@ -19,7 +19,7 @@ export function AddInventoryItemForm({
     const quantity = useFormInput(validateQuantity);
     const price = useFormInput(validatePrice);
 
-    const formSubmit = (event:React.FormEvent<HTMLFormElement>) => {
+    const formSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         const validateName = name.validateForm();
@@ -46,14 +46,14 @@ export function AddInventoryItemForm({
         }
 
         await addInventoryStock({ 
-                name: name.inputValue, 
-                description: description.inputValue, 
-                location: location.inputValue, 
-                manufacturer: manufacturer.inputValue, 
-                category: category.inputValue, 
-                quantity: quantity.inputValue, 
-                price: price.inputValue }
-        );
+                name: name.inputValue as string, 
+                description: description.inputValue as string, 
+                location: location.inputValue as string, 
+                manufacturer: manufacturer.inputValue as string, 
+                category: category.inputValue as string, 
+                quantity: quantity.inputValue as number, 
+                price: price.inputValue as number
+        });
 
         name.setValue("");
         description.setValue("");
@@ -149,7 +149,7 @@ export function AddInventoryItemForm({
                     type="submit"
                     className="submitButton"
                     value="ADD"
-                    disabled={!name || !description || !location || !manufacturer || !category || !quantity || !price}
+                    
                 />
                 </div>
             </form>
