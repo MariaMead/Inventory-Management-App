@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { InventoryItem } from "../../Inventory/inventoryData";
+import type { InventoryItem } from "../Inventory/inventoryData";
 import {
 	fetchLowStockItems,
 	updateLowStockItem,
 	deleteLowStockItem
-} from "../lowStockRepo/lowStockRepo";
+} from "../apis/lowStockRepo";
 
 export function useLowStock() {
 	const [items, setItems] = useState<InventoryItem[]>([]);
