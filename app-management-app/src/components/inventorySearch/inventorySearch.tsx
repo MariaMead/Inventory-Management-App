@@ -2,21 +2,16 @@ import { useState } from "react";
 import { useSearchFilter } from "../../hooks/useSearchFilter";
 import "./inventorySearch.css";
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
-import { stockData } from "../../apis/stockData";
 import type { InventoryStock } from "../../types/inventoryStock";
-import { addStockInventory } from "../../repositories/inventoryListRepo";
+import { addInventoryStock } from "../../services/stockService";
+import { stockData } from "../../apis/stockData";
 
 
 // Function to filter inventory by text in a search field
-function InventorySearch({
-    stockList,
-    setInventoryStock
-}: {
-    stockList: InventoryStock[],
-    setInventoryStock: React.Dispatch<React.SetStateAction<InventoryStock[]>>;
-}) {
+function InventorySearch() {
+    const [stockList, setInventoryStock] = useState<InventoryStock[]>(stockData);
     //Setting state to prepare for input to change state used a custom hook called useSearch filter
-    const { search, setSearch, filteredText } = useSearchFilter(stockData, "name");
+    const { search, setSearch, filteredText } = useSearchFilter(stockList, "name");
 
     const [showForm, setShowForm] = useState(false);
     // Adding inventory item to bottom of list with last number + 1 for Id
@@ -25,25 +20,25 @@ function InventorySearch({
         item: Omit<InventoryStock, "id">
     ): Promise<string | InventoryStock> => {
         try {
-            const result = await addStockInventory(item);
+            const result = await addInventoryStock(item);
+            if (typeof result === "string") {
+               
+                return result; 
+            }
 
             setInventoryStock(prev => [
-                ...prev.filter(
-                    item => 
-                        item.name !== result.name || item.description !== result.description ||
-                        item.location !== result.location || item.manufacturer !== result.manufacturer ||
-                        item.category !== result.category || item.quantity !== result.quantity ||
-                        item.price !== result.price
-                ), {...result}
-            ]);
+                ...prev, 
+                result
+            ])
             return result;
+
         } catch (error: unknown) {
             if(error instanceof Error) {
                 return error.message;
             }
             return "An unexpected error occurred.";
         }
-    }
+    };
 
     return(
         // Inventory section to show a table of inventory items
@@ -98,8 +93,8 @@ function InventorySearch({
                             <td>{item.location}</td>
                             <td>{item.manufacturer}</td>
                             <td>{item.category}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.price.toFixed(2)}</td>
+                            <td>{Number(item.quantity)}</td>
+                            <td>{Number(item.price.toFixed(2))}</td>
                         </tr>
                     ))}
                 </tbody>

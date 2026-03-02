@@ -45,7 +45,7 @@ export function AddInventoryItemForm({
                 return;
         }
 
-        await addInventoryStock({ 
+        const result = await addInventoryStock({ 
                 name: name.inputValue as string, 
                 description: description.inputValue as string, 
                 location: location.inputValue as string, 
@@ -54,6 +54,11 @@ export function AddInventoryItemForm({
                 quantity: quantity.inputValue as number, 
                 price: price.inputValue as number
         });
+
+        if (typeof result === "string") {
+            alert(result); // or set an error state to display in the form
+            return;
+        }
 
         name.setValue("");
         description.setValue("");
