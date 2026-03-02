@@ -1,8 +1,6 @@
 import "./lowStockAlert.css"
 import { useState } from "react";
 import type { InventoryItem } from "../../Inventory/inventoryData";
-import { inventoryService } from "../../services/inventoryService";
-import type React from "react";
 import { inventoryRepository } from "../../repositories/inventoryRepository";
 
 
