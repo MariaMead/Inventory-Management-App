@@ -1,36 +1,16 @@
-import { useState } from 'react';
 import './profilePage.css';
+import { useUserProfileEdit } from '../../hooks/useUserProfileEdit';
 
 export default function ProfilePage() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState({
-    fullName: 'John Doe',
-    email: 'example@example.com',
-    phone: '(123) 456-7890',
-    address: '123 Main St'
-  });
-
-  // Temporary storage for edits before saving or discarding changes
-  const [tempData, setTempData] = useState(profileData);
-
-  const handleEdit = () => {
-    setTempData(profileData);
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    setProfileData(tempData);
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setTempData(profileData);
-    setIsEditing(false);
-  };
-
-  const handleChange = (field: string, value: string) => {
-    setTempData({ ...tempData, [field]: value });
-  };
+  const {
+    isEditing,
+    data,
+    tempData,
+    handleEdit,
+    handleSave,
+    handleCancel,
+    onChange
+  } = useUserProfileEdit('user-1');
 
   return (
     <section className="profile-section">
@@ -44,7 +24,7 @@ export default function ProfilePage() {
                   alt="avatar"
                   className="profile-avatar"
                 />
-                <p className="text-muted mb-1">{profileData.fullName}</p>
+                <p className="text-muted mb-1">{data.name}</p>
               </div>
             </div>
           </div>
@@ -69,12 +49,12 @@ export default function ProfilePage() {
                     {isEditing ? (
                       <input
                         type="text"
-                        value={tempData.fullName}
-                        onChange={(e) => handleChange('fullName', e.target.value)}
+                        value={tempData.name}
+                        onChange={(e) => onChange('name', e.target.value)}
                         className="profile-input"
                       />
                     ) : (
-                      profileData.fullName
+                      data.name
                     )}
                   </div>
                 </div>
@@ -86,11 +66,11 @@ export default function ProfilePage() {
                       <input
                         type="email"
                         value={tempData.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
+                        onChange={(e) => onChange('email', e.target.value)}
                         className="profile-input"
                       />
                     ) : (
-                      profileData.email
+                      data.email
                     )}
                   </div>
                 </div>
@@ -102,11 +82,11 @@ export default function ProfilePage() {
                       <input
                         type="tel"
                         value={tempData.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
+                        onChange={(e) => onChange('phone', e.target.value)}
                         className="profile-input"
                       />
                     ) : (
-                      profileData.phone
+                      data.phone
                     )}
                   </div>
                 </div>
@@ -118,11 +98,11 @@ export default function ProfilePage() {
                       <input
                         type="text"
                         value={tempData.address}
-                        onChange={(e) => handleChange('address', e.target.value)}
+                        onChange={(e) => onChange('address', e.target.value)}
                         className="profile-input"
                       />
                     ) : (
-                      profileData.address
+                      data.address
                     )}
                   </div>
                 </div>

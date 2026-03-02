@@ -1,111 +1,85 @@
-// TypeScript type for Manufacturer resource
-export type Manufacturer = {
-  id: string;
-  name: string;
-  contact: string;
-  phone: string;
-  location: string;
-};
+import { testProfiles, type Profile } from './profileData';
 
-// Test data for manufacturers
-const testManufacturers: Manufacturer[] = [
-  {
-    id: '1',
-    name: 'ABC Manufacturing Co.',
-    contact: 'contact@abc.com',
-    phone: '(555) 123-4567',
-    location: 'New York, NY'
-  },
-  {
-    id: '2',
-    name: 'XYZ Industries',
-    contact: 'info@xyz.com',
-    phone: '(555) 987-6543',
-    location: 'Los Angeles, CA'
-  },
-  {
-    id: '3',
-    name: 'Global Supply Inc.',
-    contact: 'sales@globalsupply.com',
-    phone: '(555) 456-7890',
-    location: 'Chicago, IL'
-  },
-  {
-    id: '4',
-    name: 'Premium Products LLC',
-    contact: 'support@premium.com',
-    phone: '(555) 321-0987',
-    location: 'Houston, TX'
-  }
-];
+let profiles: Profile[] = [...testProfiles];
 
-// In-memory storage for manufacturers (simulating external data)
-let manufacturers: Manufacturer[] = [...testManufacturers];
-
-/**
- * Repository for managing manufacturer data
- * Provides CRUD operations for manufacturer resources
- */
-export const manufacturerRepository = {
+export const profileRepository = {
   /**
-   * Get all manufacturers
-   * @returns Array of all manufacturers
+   * Get all profiles
+   * @returns Array of all profiles
    */
-  getAll(): Manufacturer[] {
-    return [...manufacturers];
+  getAll(): Profile[] {
+    return [...profiles];
   },
 
   /**
-   * Get a manufacturer by ID
-   * @param id - The manufacturer ID
-   * @returns The manufacturer if found, undefined otherwise
+   * Get a profile by ID
+   * @param id - The profile ID
+   * @returns The profile if found, undefined otherwise
    */
-  getById(id: string): Manufacturer | undefined {
-    return manufacturers.find(manufacturer => manufacturer.id === id);
+  getById(id: string): Profile | undefined {
+    return profiles.find(profile => profile.id === id);
   },
 
   /**
-   * Create a new manufacturer
-   * @param newManufacturer - The manufacturer data (without ID)
-   * @returns The created manufacturer with generated ID
+   * Create a new profile
+   * @param newProfile - The profile data
+   * @returns The created profile with generated ID
    */
-  create(newManufacturer: Omit<Manufacturer, 'id'>): Manufacturer {
-    const id = (Math.max(...manufacturers.map(m => parseInt(m.id)), 0) + 1).toString();
-    const manufacturer: Manufacturer = { id, ...newManufacturer };
-    manufacturers.push(manufacturer);
-    return manufacturer;
+  create(newProfile: Omit<Profile, 'id'>): Profile {
+    // Generate new ID
+    const maxId = profiles.length > 0 
+      ? Math.max(...profiles.map(p => {
+          const numId = parseInt(p.id.replace('user-', ''));
+          return isNaN(numId) ? 0 : numId;
+        })) 
+      : 0;
+    const id = `user-${maxId + 1}`;
+    
+    const profile: Profile = { 
+      id, 
+      ...newProfile 
+    };
+    
+    profiles.push(profile);
+    return profile;
   },
 
   /**
-   * Update an existing manufacturer
-   * @param id - The manufacturer ID
-   * @param updatedData - The updated manufacturer data
-   * @returns True if updated successfully, false otherwise
+   * Update an existing profile
+   * @param id - The profile ID
+   * @param updatedData - The updated profile data
+   * @returns The updated profile if successful, undefined otherwise
    */
-  update(id: string, updatedData: Partial<Omit<Manufacturer, 'id'>>): boolean {
-    const index = manufacturers.findIndex(m => m.id === id);
+  update(id: string, updatedData: Partial<Omit<Profile, 'id'>>): Profile | undefined {
+    const index = profiles.findIndex(p => p.id === id);
+    
     if (index !== -1) {
-      manufacturers[index] = { ...manufacturers[index], ...updatedData };
-      return true;
+      profiles[index] = { 
+        ...profiles[index], 
+        ...updatedData 
+      };
+      return profiles[index];
     }
-    return false;
+    
+    return undefined;
   },
 
   /**
-   * Delete a manufacturer
-   * @param id - The manufacturer ID
+   * Delete a profile
+   * @param id - The profile ID
    * @returns True if deleted successfully, false otherwise
    */
   delete(id: string): boolean {
-    const initialLength = manufacturers.length;
-    manufacturers = manufacturers.filter(m => m.id !== id);
-    return manufacturers.length < initialLength;
+    const initialLength = profiles.length;
+    profiles = profiles.filter(p => p.id !== id);
+    return profiles.length < initialLength;
   },
 
   /**
-   * Reset manufacturers to test data (useful for testing)
+   * Reset profiles to test data
    */
   reset(): void {
-    manufacturers = [...testManufacturers];
+    profiles = [...testProfiles];
   }
 };
+
