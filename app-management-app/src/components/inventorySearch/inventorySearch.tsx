@@ -38,7 +38,8 @@ function InventorySearch() {
                 />    
             </label>
             <AddInventoryItemForm 
-            addInventoryItem={addInventoryItem}
+                inventory={inventory}
+                setInventoryList={setInventoryList}
             />
 
 
