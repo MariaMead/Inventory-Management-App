@@ -150,7 +150,6 @@ export function AddInventoryItemForm({
                     type="submit"
                     className="submitButton"
                     value="ADD"
-                    
                 />
                 </div>
             </form>
