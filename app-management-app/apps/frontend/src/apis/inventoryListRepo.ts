@@ -1,5 +1,5 @@
-import type { InventoryStock } from "../types/inventoryStock";
-import {stockData } from "../apis/stockData";
+import type { FrontendInventoryStock as InventoryStock } from "@shared/types/frontend-InventoryStock";
+import { stockData } from "./stockData";
 
 /**
  * A function to fetch all data from InventoryStock
@@ -47,3 +47,4 @@ export async function addStockInventory(newStock: InventoryStock): Promise<Inven
     
     return structuredClone(newStock);
 }
+

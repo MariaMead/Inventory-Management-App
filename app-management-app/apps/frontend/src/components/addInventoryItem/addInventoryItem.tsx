@@ -1,9 +1,10 @@
-import type { InventoryStock } from "../../types/inventoryStock";
+import type { FrontendInventoryStock as InventoryStock } from "@shared/types/frontend-InventoryStock";
 import { useFormInput } from "../../hooks/useFormInput";
 import "./addInventoryItem.css"
 import {validateName, validateDescription, 
         validateLocation, validateManufacturer, 
-        validateCategory, validateQuantity, validatePrice} from "../../services/stockService";
+        validateCategory, validateQuantity, validatePrice,
+        validateLowStockThreshold} from "../../services/stockService";
 
 export function AddInventoryItemForm({
     addInventoryStock,
@@ -18,6 +19,7 @@ export function AddInventoryItemForm({
     const category = useFormInput(validateCategory);
     const quantity = useFormInput(validateQuantity);
     const price = useFormInput(validatePrice);
+    const lowStockThreshold= useFormInput(validateLowStockThreshold);
 
     const formSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -29,6 +31,7 @@ export function AddInventoryItemForm({
         const validateCategory = category.validateForm();
         const validateQuantity = quantity.validateForm();
         const validatePrice = price.validateForm();
+        const ValidateLowStockThreshold = lowStockThreshold.validateForm();
         
         name.setError(validateName.error ?? null);
         description.setError(validateDescription.error ?? null);
@@ -37,6 +40,7 @@ export function AddInventoryItemForm({
         category.setError(validateCategory.error ?? null);
         quantity.setError(validateQuantity.error ?? null);
         price.setError(validatePrice.error ?? null);
+        lowStockThreshold.setError(ValidateLowStockThreshold.error ?? null);
 
         if(!validateName.isValid || !validateDescription.isValid || 
             !validateLocation.isValid || !validateManufacturer.isValid || 
@@ -52,7 +56,8 @@ export function AddInventoryItemForm({
                 manufacturer: manufacturer.inputValue as string, 
                 category: category.inputValue as string, 
                 quantity: Number(quantity.inputValue), 
-                price: Number(price.inputValue)
+                price: Number(price.inputValue),
+                lowStockThreshold: Number(lowStockThreshold.inputValue)
         });
 
 
@@ -133,6 +138,17 @@ export function AddInventoryItemForm({
                         onChange={price.onChange}
                     />
                     {price.error && <p className="error">{price.error}</p>}
+                </div>
+
+                <div className="item-data">
+                    <label htmlFor="item-price">Low Stock Threshold</label>
+                    <input
+                        id="item-price"
+                        type="number"
+                        value={lowStockThreshold.inputValue}
+                        onChange={lowStockThreshold.onChange}
+                    />
+                    {price.error && <p className="error">{lowStockThreshold.error}</p>}
                 </div>
 
                     <div className="item-data">
