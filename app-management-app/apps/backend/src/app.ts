@@ -23,4 +23,5 @@ app.use("/api/v1", inventoryListRoutes);
 
 app.use(errorHandler);
 
+
 export default app;
