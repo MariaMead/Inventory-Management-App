@@ -61,7 +61,7 @@ export const validatePrice = (value: string | number): Validation => {
 
 export const validateLowStockThreshold = (value: string | number): Validation => {
     const lowStockThreshold = Number(value);
-    if(isNaN(lowStockThreshold) || lowStockThreshold >= 3) {
+    if(isNaN(lowStockThreshold) || lowStockThreshold <= 3) {
         return { isValid: false, error: "Low stock threshold must be 3 or greater."};
     }
     return { isValid: true, error: ""};

@@ -31,7 +31,7 @@ export function AddInventoryItemForm({
         const validateCategory = category.validateForm();
         const validateQuantity = quantity.validateForm();
         const validatePrice = price.validateForm();
-        const ValidateLowStockThreshold = lowStockThreshold.validateForm();
+        const validateLowStockThreshold = lowStockThreshold.validateForm();
         
         name.setError(validateName.error ?? null);
         description.setError(validateDescription.error ?? null);
@@ -40,12 +40,12 @@ export function AddInventoryItemForm({
         category.setError(validateCategory.error ?? null);
         quantity.setError(validateQuantity.error ?? null);
         price.setError(validatePrice.error ?? null);
-        lowStockThreshold.setError(ValidateLowStockThreshold.error ?? null);
+        lowStockThreshold.setError(validateLowStockThreshold.error ?? null);
 
         if(!validateName.isValid || !validateDescription.isValid || 
             !validateLocation.isValid || !validateManufacturer.isValid || 
             !validateCategory.isValid || !validateQuantity.isValid || 
-            !validatePrice.isValid) {
+            !validatePrice.isValid || !validateLowStockThreshold.isValid) {
                 return;
         }
 
@@ -68,6 +68,7 @@ export function AddInventoryItemForm({
         category.setValue("");
         quantity.setValue(0);
         price.setValue(0);
+        lowStockThreshold.setValue(0);
     };
 
     return(
@@ -123,6 +124,7 @@ export function AddInventoryItemForm({
                     <input
                         id="item-quantity"
                         type="number"
+                        min={0}
                         value={quantity.inputValue}
                         onChange={quantity.onChange}
                     />
@@ -134,6 +136,8 @@ export function AddInventoryItemForm({
                     <input
                         id="item-price"
                         type="number"
+                        min={0}
+                        step={0.01}
                         value={price.inputValue}
                         onChange={price.onChange}
                     />
@@ -141,14 +145,16 @@ export function AddInventoryItemForm({
                 </div>
 
                 <div className="item-data">
-                    <label htmlFor="item-price">Low Stock Threshold</label>
+                    <label htmlFor="item-lowStockThreshold">Low Stock Threshold</label>
                     <input
-                        id="item-price"
+                        id="item-lowStockThreshold"
+                        name="lowStockThreshold"
                         type="number"
+                        min={0}
                         value={lowStockThreshold.inputValue}
                         onChange={lowStockThreshold.onChange}
                     />
-                    {price.error && <p className="error">{lowStockThreshold.error}</p>}
+                    {lowStockThreshold.error && <p className="error">{lowStockThreshold.error}</p>}
                 </div>
 
                     <div className="item-data">
