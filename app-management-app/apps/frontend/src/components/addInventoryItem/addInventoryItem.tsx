@@ -21,6 +21,7 @@ export function AddInventoryItemForm({
     const price = useFormInput(validatePrice);
     const lowStockThreshold= useFormInput(validateLowStockThreshold);
 
+
     const formSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
@@ -32,7 +33,7 @@ export function AddInventoryItemForm({
         const validateQuantity = quantity.validateForm();
         const validatePrice = price.validateForm();
         const validateLowStockThreshold = lowStockThreshold.validateForm();
-        
+
         name.setError(validateName.error ?? null);
         description.setError(validateDescription.error ?? null);
         location.setError(validateLocation.error ?? null);
@@ -46,6 +47,7 @@ export function AddInventoryItemForm({
             !validateLocation.isValid || !validateManufacturer.isValid || 
             !validateCategory.isValid || !validateQuantity.isValid || 
             !validatePrice.isValid || !validateLowStockThreshold.isValid) {
+
                 return;
         }
 
@@ -58,6 +60,7 @@ export function AddInventoryItemForm({
                 quantity: Number(quantity.inputValue), 
                 price: Number(price.inputValue),
                 lowStockThreshold: Number(lowStockThreshold.inputValue)
+                price: Number(price.inputValue)
         });
 
 
