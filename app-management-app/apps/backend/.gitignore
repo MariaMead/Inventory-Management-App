@@ -1,10 +1,12 @@
 
 
 node_modules
-
+.vscode/*
+!.vscode/extensions.json
 
 # Keep environment variables out of version control
 .env
 
 /generated/prisma
+src/generated/prisma*
 
