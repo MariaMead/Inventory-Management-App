@@ -60,7 +60,7 @@ export function AddInventoryItemForm({
                 quantity: Number(quantity.inputValue), 
                 price: Number(price.inputValue),
                 lowStockThreshold: Number(lowStockThreshold.inputValue)
-                price: Number(price.inputValue)
+         
         });
 
 
