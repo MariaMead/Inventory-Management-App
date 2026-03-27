@@ -12,6 +12,7 @@ export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> =
     try{
         const allStockData = await prisma.product.findMany({
             select: {
+                id: true,
                 name: true,
                 description: true,
                 manufacturer: true,
@@ -35,6 +36,7 @@ export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> =
         const allData: FrontendInventoryStock[] = allStockData.flatMap(product => 
             product.inventory.map((inventory: { quantity: number; threshold: number; location:{name: string}
             }) => ({
+                id: product.id.toString(),
                 name: product.name,
                 description: product.description,
                 manufacturer: product.manufacturer,
