@@ -1,7 +1,8 @@
 import type { FrontendInventoryStock }from "@shared/types/frontend-InventoryStock";
 import { prisma } from "../../../../prisma/prismaClient";
 import { Category, Manufacturer } from "../../../../src/generated/prisma/enums";
-
+import { AppError } from "../errors/errors";
+import { HTTP_STATUS } from "src/constants/httpConstants";
 
 /**
  * A function to return all items in stockData
@@ -50,6 +51,9 @@ export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> =
 
         return allData;
     } catch (error: unknown) {
+        if(error instanceof AppError) {
+            throw error;
+        }
         console.error("Error fetching inventory stock:", error);
         throw new Error("Failed to fetch inventory stock data.");
     }
@@ -70,18 +74,22 @@ export const createStockItem = async (
 
         const validateManufacturers = Object.values(Manufacturer);
         if(!validateManufacturers.includes(manufacturer)) {
-            throw new Error(
+            throw new AppError(
                 `Invalid manufacturer: ${itemData.manufacturer}. Expected one of 
-                ${validateManufacturers.join(', ')}`);
+                ${validateManufacturers.join(', ')}`,
+                "INVALID_MANUFACTURER",
+                HTTP_STATUS.BAD_REQUEST);
         }
 
         //Convert category to all caps to match Enum.
         const category = itemData.category.toUpperCase() as Category;
         const validateCategories = Object.values(Category);
         if(!validateCategories.includes(category)) {
-            throw new Error(
+            throw new AppError(
                 `Invalid category: ${itemData.category}. Expected one of 
-                ${validateCategories.join(', ')}.`);
+                ${validateCategories.join(', ')}.`,
+                "INVALID_CATEGORY",
+                HTTP_STATUS.BAD_REQUEST);
         }
 
         //Create an entry for Product table
@@ -108,7 +116,11 @@ export const createStockItem = async (
         });
 
         if (!location) {
-            throw new Error(`Location '${itemData.location}' not found`);
+            throw new AppError(
+                `Location '${itemData.location}' not found`,
+                "LOCATION_NOT_FOUND",
+                HTTP_STATUS.NOT_FOUND
+            );
         }
 
         // Create an entry for Inventory table
@@ -135,9 +147,14 @@ export const createStockItem = async (
             
     } catch (error: unknown) {
         console.error("Error creating stock item:", error);
-        if(error instanceof Error) {
-            throw new Error(error.message);
+        if(error instanceof AppError) {
+            throw error;
         }
-        throw new Error("Internal server error while creating stock item.");
+        console.log("Error creating inventory item:", error)
+        throw new AppError(
+            "Error while creating stock item.",
+            "INTERNAL_SERVICE_ERROR",
+            HTTP_STATUS.INTERNAL_SERVER_ERROR
+        );
     }
 };
