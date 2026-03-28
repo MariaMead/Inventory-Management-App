@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { successResponse, errorResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as profileService from "../services/profileService";
-import type { UserProfile }from "@shared/types/userProfile";
+import type { FrontendProfile } from "@shared/types/frontend-profile";
 
 export const getProfile = async (
   req: Request,
@@ -11,7 +11,7 @@ export const getProfile = async (
 ): Promise<void> => {
   try {
     const id = req.params.id;
-    const user = await profileService.getProfileById(id);
+    const user = await profileService.getProfileById(id) as FrontendProfile;
 
     if (!user) {
       res.status(HTTP_STATUS.NOT_FOUND).json(errorResponse("User profile not found."));
@@ -44,7 +44,7 @@ export const updateProfile = async (
       email,
       phone,
       address
-    });
+    }) as FrontendProfile;
 
     res.status(HTTP_STATUS.OK).json(successResponse(updatedUser, "User profile updated successfully."));
 
@@ -54,12 +54,12 @@ export const updateProfile = async (
 };
 
 export const getAllProfiles = async (
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
-    const users = await profileService.getAllProfiles();
+    const users = await profileService.getAllProfiles() as FrontendProfile[];
 
     res.status(HTTP_STATUS.OK).json(successResponse(users, "User profiles retrieved successfully."));
 
