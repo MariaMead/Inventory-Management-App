@@ -9,6 +9,7 @@ import corsOptions from "../config/cors";
 import morgan from "morgan";
 import inventoryListRoutes from "../src/api/v1/routes/inventoryListRoutes";
 import errorHandler from "./api/v1/middleware/errorHandler";
+import lowStockRoutes from "./api/v1/routes/lowStockRoutes";
 
 const app: Express = express();
 
@@ -26,6 +27,7 @@ app.get("/",  (_req, res) => {
 });
 
 app.use("/api/v1", inventoryListRoutes);
+app.use("/api/v1/low-stock", lowStockRoutes);
 
 
 app.use(errorHandler);
