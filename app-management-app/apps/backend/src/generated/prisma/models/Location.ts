@@ -250,10 +250,10 @@ export type LocationOrderByWithRelationInput = {
 
 export type LocationWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
   AND?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
   OR?: Prisma.LocationWhereInput[]
   NOT?: Prisma.LocationWhereInput | Prisma.LocationWhereInput[]
-  name?: Prisma.StringFilter<"Location"> | string
   address?: Prisma.StringFilter<"Location"> | string
   city?: Prisma.StringFilter<"Location"> | string
   province?: Prisma.StringFilter<"Location"> | string
@@ -261,7 +261,7 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Location"> | Date | string
   users?: Prisma.UserListRelationFilter
   inventory?: Prisma.InventoryListRelationFilter
-}, "id">
+}, "id" | "name">
 
 export type LocationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -425,20 +425,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type LocationCreateNestedOneWithoutUsersInput = {
-  create?: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutUsersInput
-  connect?: Prisma.LocationWhereUniqueInput
-}
-
-export type LocationUpdateOneRequiredWithoutUsersNestedInput = {
-  create?: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutUsersInput
-  upsert?: Prisma.LocationUpsertWithoutUsersInput
-  connect?: Prisma.LocationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutUsersInput, Prisma.LocationUpdateWithoutUsersInput>, Prisma.LocationUncheckedUpdateWithoutUsersInput>
-}
-
 export type LocationCreateNestedOneWithoutInventoryInput = {
   create?: Prisma.XOR<Prisma.LocationCreateWithoutInventoryInput, Prisma.LocationUncheckedCreateWithoutInventoryInput>
   connectOrCreate?: Prisma.LocationCreateOrConnectWithoutInventoryInput
@@ -453,62 +439,18 @@ export type LocationUpdateOneRequiredWithoutInventoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutInventoryInput, Prisma.LocationUpdateWithoutInventoryInput>, Prisma.LocationUncheckedUpdateWithoutInventoryInput>
 }
 
-export type LocationCreateWithoutUsersInput = {
-  name: string
-  address: string
-  city: string
-  province: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  inventory?: Prisma.InventoryCreateNestedManyWithoutLocationInput
+export type LocationCreateNestedOneWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutUsersInput
+  connect?: Prisma.LocationWhereUniqueInput
 }
 
-export type LocationUncheckedCreateWithoutUsersInput = {
-  id?: number
-  name: string
-  address: string
-  city: string
-  province: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutLocationInput
-}
-
-export type LocationCreateOrConnectWithoutUsersInput = {
-  where: Prisma.LocationWhereUniqueInput
-  create: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
-}
-
-export type LocationUpsertWithoutUsersInput = {
-  update: Prisma.XOR<Prisma.LocationUpdateWithoutUsersInput, Prisma.LocationUncheckedUpdateWithoutUsersInput>
-  create: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
-  where?: Prisma.LocationWhereInput
-}
-
-export type LocationUpdateToOneWithWhereWithoutUsersInput = {
-  where?: Prisma.LocationWhereInput
-  data: Prisma.XOR<Prisma.LocationUpdateWithoutUsersInput, Prisma.LocationUncheckedUpdateWithoutUsersInput>
-}
-
-export type LocationUpdateWithoutUsersInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  province?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  inventory?: Prisma.InventoryUpdateManyWithoutLocationNestedInput
-}
-
-export type LocationUncheckedUpdateWithoutUsersInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  province?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  inventory?: Prisma.InventoryUncheckedUpdateManyWithoutLocationNestedInput
+export type LocationUpdateOneRequiredWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutUsersInput
+  upsert?: Prisma.LocationUpsertWithoutUsersInput
+  connect?: Prisma.LocationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutUsersInput, Prisma.LocationUpdateWithoutUsersInput>, Prisma.LocationUncheckedUpdateWithoutUsersInput>
 }
 
 export type LocationCreateWithoutInventoryInput = {
@@ -567,6 +509,64 @@ export type LocationUncheckedUpdateWithoutInventoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutLocationNestedInput
+}
+
+export type LocationCreateWithoutUsersInput = {
+  name: string
+  address: string
+  city: string
+  province: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventory?: Prisma.InventoryCreateNestedManyWithoutLocationInput
+}
+
+export type LocationUncheckedCreateWithoutUsersInput = {
+  id?: number
+  name: string
+  address: string
+  city: string
+  province: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventory?: Prisma.InventoryUncheckedCreateNestedManyWithoutLocationInput
+}
+
+export type LocationCreateOrConnectWithoutUsersInput = {
+  where: Prisma.LocationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
+}
+
+export type LocationUpsertWithoutUsersInput = {
+  update: Prisma.XOR<Prisma.LocationUpdateWithoutUsersInput, Prisma.LocationUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.LocationCreateWithoutUsersInput, Prisma.LocationUncheckedCreateWithoutUsersInput>
+  where?: Prisma.LocationWhereInput
+}
+
+export type LocationUpdateToOneWithWhereWithoutUsersInput = {
+  where?: Prisma.LocationWhereInput
+  data: Prisma.XOR<Prisma.LocationUpdateWithoutUsersInput, Prisma.LocationUncheckedUpdateWithoutUsersInput>
+}
+
+export type LocationUpdateWithoutUsersInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventory?: Prisma.InventoryUpdateManyWithoutLocationNestedInput
+}
+
+export type LocationUncheckedUpdateWithoutUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventory?: Prisma.InventoryUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 

@@ -9,7 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Location'
-export type * from './models/User'
+export type * from './models/Product'
 export type * from './models/Inventory'
-export type * from './models/LowStockAlert'
+export type * from './models/User'
 export type * from './commonInputTypes'

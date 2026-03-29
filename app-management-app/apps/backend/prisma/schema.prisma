@@ -48,11 +48,11 @@ model Inventory {
 }
  
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  email     String   @unique
-  phone     String?
-  address   String?
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  phone      String
+  address    String
   locationId Int
   location   Location @relation(fields: [locationId], references: [id])
   createdAt  DateTime @default(now())

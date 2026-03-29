@@ -50,9 +50,9 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 export const ModelName = {
   Location: 'Location',
-  User: 'User',
+  Product: 'Product',
   Inventory: 'Inventory',
-  LowStockAlert: 'LowStockAlert'
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -84,6 +84,29 @@ export const LocationScalarFieldEnum = {
 export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
 
 
+export const ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  manufacturer: 'manufacturer',
+  price: 'price'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const InventoryScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  locationId: 'locationId',
+  quantity: 'quantity',
+  threshold: 'threshold'
+} as const
+
+export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -96,33 +119,6 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const InventoryScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  manufacturer: 'manufacturer',
-  category: 'category',
-  quantity: 'quantity',
-  price: 'price',
-  locationId: 'locationId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
-
-
-export const LowStockAlertScalarFieldEnum = {
-  id: 'id',
-  lowStockThreshold: 'lowStockThreshold',
-  inventoryId: 'inventoryId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LowStockAlertScalarFieldEnum = (typeof LowStockAlertScalarFieldEnum)[keyof typeof LowStockAlertScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -139,12 +135,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
