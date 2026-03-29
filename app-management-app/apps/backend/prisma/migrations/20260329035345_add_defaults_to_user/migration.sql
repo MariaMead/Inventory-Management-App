@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "name" SET DEFAULT 'unknown',
+ALTER COLUMN "phone" SET DEFAULT '000-000-0000',
+ALTER COLUMN "address" SET DEFAULT 'unknown';
