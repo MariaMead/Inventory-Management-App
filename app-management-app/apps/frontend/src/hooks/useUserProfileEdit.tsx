@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import * as ProfileService from "../services/profileService";
-import type {ProfileData } from "../services/profileService";
+import type { ProfileData } from "../services/profileService";
+import { FrontendProfile } from "@shared/types";
 
 // extracting error message
 const getErrorMessage = (err: unknown) : string =>
@@ -28,12 +29,7 @@ const getErrorMessage = (err: unknown) : string =>
  * }
  */
 export function useUserProfileEdit(userId: string) {
-    const defaultProfile: ProfileData = {
-        name: "",
-        email: "",
-        phone: "",
-        address: ""
-    };
+    const defaultProfile: FrontendProfile = { name: "", email: "", phone: "", address: "" };
     
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [data, setData] = useState<ProfileData>(defaultProfile);
