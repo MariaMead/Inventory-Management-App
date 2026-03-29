@@ -34,6 +34,7 @@ export function useUserProfileEdit(userId: string) {
     
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [data, setData] = useState<ProfileData>(defaultProfile);
+    const [error, setError] = useState<string | null>(null);
 
     //temp data storage
     const [ tempData, setTempData] = useState<ProfileData>(defaultProfile);
@@ -43,10 +44,18 @@ export function useUserProfileEdit(userId: string) {
         let ignore = false;
 
         async function loadProfile() {
-            const profile = await ProfileService.fetchProfileById(userId);
-            if(!ignore) {
-                setData(profile);
-                setTempData(profile);
+            try {
+                const profile = await ProfileService.fetchProfileById(userId);
+                if(!ignore) {
+                    setData(profile);
+                    setTempData(profile);
+                    setError(null);
+                }
+            } catch (err) {
+                if (!ignore) {
+                    setError(`Failed to load profile: ${err instanceof Error ? err.message : 'Unknown error'}`);
+                    console.error('Failed to load profile:', err);
+                }
             }
         }
         loadProfile();
@@ -64,10 +73,17 @@ export function useUserProfileEdit(userId: string) {
     const handleSave = async () => {
         if(!tempData) return;
 
-        const updatedData = await ProfileService.updateUserProfile(userId, tempData);
-        setData(updatedData);
-        setTempData(updatedData);
-        setIsEditing(false);
+        try {
+            const updatedData = await ProfileService.updateUserProfile(userId, tempData);
+            setData(updatedData);
+            setTempData(updatedData);
+            setIsEditing(false);
+            setError(null);
+            console.log('Profile saved successfully');
+        } catch (err) {
+            setError(`Failed to save profile: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            console.error('Failed to save profile:', err);
+        }
     };
 
     const handleCancel = () => {
@@ -85,6 +101,7 @@ export function useUserProfileEdit(userId: string) {
         isEditing,
         data,
         tempData,
+        error,
         handleEdit,
         handleSave,
         handleCancel,
