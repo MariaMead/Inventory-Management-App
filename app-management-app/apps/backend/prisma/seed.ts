@@ -4,7 +4,6 @@ import { seedLocation, seedProduct } from "./seedLocationProduct";
 import { seedInventory } from "./seedInventory";
 import { seedProfile } from "./seedProfile";
 
-
 const prisma = new PrismaClient();
 
 async function main() {
