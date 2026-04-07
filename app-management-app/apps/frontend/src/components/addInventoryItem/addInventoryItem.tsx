@@ -1,11 +1,11 @@
-import type { FrontendInventoryStock as InventoryStock } from "@shared/types/frontend-InventoryStock";
+import type { InventoryStock } from "../../types/inventoryStock";
+import { Manufacturer, Category } from "../../types/inventoryStock";
 import { useFormInput } from "../../hooks/useFormInput";
 import "./addInventoryItem.css"
 import {validateName, validateDescription, 
         validateLocation, validateManufacturer, 
         validateCategory, validateQuantity, validatePrice,
         validateLowStockThreshold} from "../../services/stockService";
-import { Category, Manufacturer } from "@shared/types/frontend-InventoryStock";
 import { useState } from "react";
 
 export function AddInventoryItemForm({

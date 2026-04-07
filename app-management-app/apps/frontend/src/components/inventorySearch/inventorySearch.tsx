@@ -4,7 +4,7 @@ import "./inventorySearch.css";
 import { AddInventoryItemForm } from "../addInventoryItem/addInventoryItem";
 import { useEffect, useState } from "react";
 
-import type { FrontendInventoryStock as InventoryStock } from "@shared/types/frontend-InventoryStock";
+import type { InventoryStock } from "../../types/inventoryStock";
 import { addInventoryStock } from "../../services/stockService";
 import { fetchAllInventoryStock } from "../../apis/inventoryListRepo";
 
@@ -41,15 +41,10 @@ function InventorySearch() {
                 return result; 
             }
             
-            setInventoryStock(prev => [
-                ...prev.filter(
-                    item => 
-                        item.name !== result.name || item.description !== result.description ||
-                        item.location !== result.location || item.manufacturer !== result.manufacturer ||
-                        item.category !== result.category || item.quantity !== result.quantity ||
-                        item.price !== result.price
-                ), {...result}
-            ]); 
+            setInventoryStock(prev => {
+                if (prev.some(i => i.id === result.id)) return prev;
+                return [...prev, result]; // Append new item
+            }); 
             return result;
         } catch (error: unknown) {
             if(error instanceof Error) {

@@ -3,8 +3,8 @@ export type FrontendInventoryStock = {
     name: string;
     description: string;
     location: string;
-    manufacturer: Manufacturer;
-    category: Category;
+    manufacturer: string;
+    category: string;
     quantity: number;
     price: number;
     lowStockThreshold: number;

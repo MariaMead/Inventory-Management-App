@@ -1,5 +1,5 @@
 import type { Validation } from "../hooks/useFormInput";
-import { Category, Manufacturer, type FrontendInventoryStock  as InventoryStock} from "@shared/types/frontend-InventoryStock";
+import { Category, Manufacturer, type InventoryStock} from "../types/inventoryStock";
 import { addStockInventory } from "../apis/inventoryListRepo";
 
 

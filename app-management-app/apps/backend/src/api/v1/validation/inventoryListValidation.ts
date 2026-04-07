@@ -1,5 +1,5 @@
 import Joi, { ObjectSchema } from "joi";
-const { Category, Manufacturer } = require('@shared/types/frontend-InventoryStock');
+import { Category, Manufacturer } from "@prisma/client";
 
 export const inventoryListSchema: ObjectSchema = Joi.object({
     name: Joi.string().required().min(3).messages({

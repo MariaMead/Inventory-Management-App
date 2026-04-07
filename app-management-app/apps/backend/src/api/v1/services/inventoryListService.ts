@@ -1,8 +1,7 @@
-import type { FrontendInventoryStock }from "@shared/types/frontend-InventoryStock";
+import type { InventoryStock }from "../types/inventoryStock";
 
 import  prisma  from "../../../../prisma/prismaClient";
-
-import { Category, Manufacturer } from "@prisma/client";
+import { $Enums } from "@prisma/client";
 
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { AppError } from "../errors/errors";
@@ -12,7 +11,7 @@ import { AppError } from "../errors/errors";
  * A function to return all items in stockData
  * @returns -All items in stock data
  */
-export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> => {
+export const getAllInventoryStock = async(): Promise<InventoryStock[]> => {
     // nested read
     try{
         const allStockData = await prisma.product.findMany({
@@ -38,7 +37,7 @@ export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> =
         });
 
         //Formatting the data to match the oject for backend and frontend as incoming data will be nested.
-        const allData: FrontendInventoryStock[] = allStockData.flatMap(product => 
+        const allData: InventoryStock[] = allStockData.flatMap(product => 
             product.inventory.map(inventory => ({
                 id: product.id.toString(),
                 name: product.name,
@@ -69,13 +68,13 @@ export const getAllInventoryStock = async(): Promise<FrontendInventoryStock[]> =
  * @returns - the new item created
  */
 export const createStockItem = async (
-    itemData: FrontendInventoryStock
-): Promise<FrontendInventoryStock> => {
+    itemData: InventoryStock
+): Promise<InventoryStock> => {
     try {
         //Convert manufacturer input to all caps to match Enum
-        const manufacturer = itemData.manufacturer.toUpperCase().replace(/ & /g, "_") as Manufacturer;
+        const manufacturer = itemData.manufacturer.toUpperCase().replace(/ & /g, "_") as $Enums.Manufacturer;
 
-        const validateManufacturers = Object.values(Manufacturer);
+        const validateManufacturers = Object.values($Enums.Manufacturer);
         if(!validateManufacturers.includes(manufacturer)) {
             throw new AppError(
                 `Invalid manufacturer: ${itemData.manufacturer}. Expected one of 
@@ -85,8 +84,8 @@ export const createStockItem = async (
         }
 
         //Convert category to all caps to match Enum.
-        const category = itemData.category.toUpperCase() as Category;
-        const validateCategories = Object.values(Category);
+        const category = itemData.category.toUpperCase() as $Enums.Category;
+        const validateCategories = Object.values($Enums.Category);
         if(!validateCategories.includes(category)) {
             throw new AppError(
                 `Invalid category: ${itemData.category}. Expected one of 
@@ -138,6 +137,7 @@ export const createStockItem = async (
 
         // returns 
         return {
+            id: product.id.toString(),
             name: itemData.name,
             description: itemData.description,
             manufacturer: itemData.manufacturer,

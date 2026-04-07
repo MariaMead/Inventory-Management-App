@@ -1,4 +1,4 @@
-import type { FrontendInventoryStock as InventoryStock } from "@shared/types/frontend-InventoryStock";
+import type {InventoryStock } from "../types/inventoryStock";
 
 type InventoryStocksResponseJSON = { message: String, data: InventoryStock[] };
 type InventoryStockResponseJSON = { message: String, data: InventoryStock};

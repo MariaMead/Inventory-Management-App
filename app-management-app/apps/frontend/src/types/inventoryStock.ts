@@ -8,6 +8,7 @@ export type InventoryStock = {
     category: Category;
     quantity: number;
     price: number;
+    lowStockThreshold: number;
 }
 
 export enum Category {
