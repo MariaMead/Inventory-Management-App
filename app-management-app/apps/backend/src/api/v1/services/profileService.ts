@@ -45,12 +45,17 @@ export const getProfileById = async (id: string): Promise<FrontendProfile | null
  * @param clerkId - The string id provided by clerk for Auth
  * @returns the corresponding correct Profile
  */
-export const getProfileByClerkId = async (clerkId: string): Promise<User> => {
+export const getProfileByClerkId = async (clerkId: string): Promise<User|null> => {
     return prisma.user.findFirst({
         where: { clerkId }
     });
 };
 
+/**
+ * Function to create a user when user registers using clerk.
+ * @param clerkId -String id from clerk to identify user
+ * @returns - user that was created by Clerk
+ */
 export const createProfile = async (clerkId: string): Promise<User> => {
     const clerkUser = await clerkClient.users.getUser(clerkId);
 

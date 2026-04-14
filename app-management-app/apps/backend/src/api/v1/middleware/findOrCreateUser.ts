@@ -20,7 +20,7 @@ export const findOrCreateUser = async(
         if(clerkId) {
              const existingUser: User | null = await profileService.getProfileByClerkId(clerkId);
 
-            const backendUser: User = existingUser ?? await profileService.createProfile({ clerkId });
+            const backendUser: User = existingUser ?? await profileService.createProfile(clerkId);
             req.userId = backendUser.id;
         } else {
             req.userId = null;

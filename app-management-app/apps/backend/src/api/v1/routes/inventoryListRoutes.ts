@@ -9,7 +9,6 @@ const router: Router = express.Router();
 
 router.get(
     "/inventory",
-    requireAuth,
     findOrCreateUser, 
     inventoryListController.getAllInventoryStock
 );
