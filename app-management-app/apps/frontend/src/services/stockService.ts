@@ -128,7 +128,8 @@ export function validateStock(
 }
 
 export async function addInventoryStock(
-    stockItem: Omit<InventoryStock, "id">
+    stockItem: Omit<InventoryStock, "id">,
+    sessionToken: string
 ): Promise<InventoryStock | string> {
     const stockItemWithId: InventoryStock = {
         ...stockItem,
@@ -139,6 +140,6 @@ export async function addInventoryStock(
         return error;
     }
 
-    const createdStockItem = await addStockInventory(stockItemWithId);
+    const createdStockItem = await addStockInventory(stockItemWithId, sessionToken);
     return createdStockItem;
 }

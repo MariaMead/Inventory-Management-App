@@ -12,11 +12,14 @@ const INVENTORY_ENDPOINT = "/inventory";
  * A function to fetch all data from API
  * @returns - All data found in InventoryStock[]
  */
-export async function fetchAllInventoryStock(): Promise<InventoryStock[]> {
+export async function fetchAllInventoryStock(sessionToken?: string | null): Promise<InventoryStock[]> {
     const inventoryResponse: Response = await fetch(
-        `${BASE_URL}${INVENTORY_ENDPOINT}`, {
-            credentials: "include"
-        }
+        `${BASE_URL}${INVENTORY_ENDPOINT}`, 
+        sessionToken? {
+            headers: {
+                Authorization: `Bearer ${sessionToken}`,
+            }
+        }: undefined
     );
     if(!inventoryResponse.ok) {
         throw new Error("Failed to fetch Inventory Stock.")
@@ -34,7 +37,8 @@ export async function fetchAllInventoryStock(): Promise<InventoryStock[]> {
  * @returns - The new stock item added
  */
 export async function addStockInventory(
-    newStock: InventoryStock
+    newStock: InventoryStock,
+    sessionToken: string
 ): Promise<InventoryStock>{
     const newInventoryResponse = await fetch(
         `${BASE_URL}${INVENTORY_ENDPOINT}`,
@@ -43,8 +47,8 @@ export async function addStockInventory(
             body: JSON.stringify({...newStock}),
             headers: {
                 "Content-Type": "application/json",
-            },
-            credentials: "include"
+                Authorization: `Bearer ${sessionToken}`
+            }
         }
     )
 
