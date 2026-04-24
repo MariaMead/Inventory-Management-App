@@ -21,14 +21,15 @@ function InventorySearch() {
     useEffect(() => {
         const fetchStockData = async () => {
             try {
-                const data = await fetchAllInventoryStock(); 
+                const token = isSignedIn ? await getToken() : null;
+                const data = await fetchAllInventoryStock(token); 
                 setInventoryStock(data);
             } catch (error) {
                 console.error("Error fetching inventory stock data:", error);
             }
         };
         fetchStockData(); 
-    }, []);
+    }, [isSignedIn]);
 
     if (!isLoaded) return <div> Loading....</div>;
 
