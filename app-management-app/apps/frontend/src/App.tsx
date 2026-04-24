@@ -8,6 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './common/Layout';
 import ProfilePage from './components/profilePage/profilePage';
 import NavInterface from './components/navInterface/navInterface';
+import SignInPage from "./components/authentication/SignIn";
+import SignUpPage from "./components/authentication/SignUp";
 
 
 
@@ -17,6 +19,8 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
+        <Route path="login/*" element={<SignInPage />} />
+        <Route path="signup/*" element={<SignUpPage />} />
         <Route path="/" element={<NavInterface />} />
         <Route path="/low-stock-alerts" element={<LowStockAlerts />} />
         <Route path="/inventory-search" element={<InventoryList />} />
