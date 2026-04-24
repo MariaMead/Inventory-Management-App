@@ -12,8 +12,11 @@ Make sure these are installed on your machine:
 
 ### 1. Clone the repository
 
+- When cloning this project it will create a directory Inventory-Management-App we need to navigate into this directory and then navigate to our root of the project as it is nested.
+
 ```bash
 git clone https://github.com/mariamead/Inventory-Management-App
+cd Inventory-Management-App
 cd app-management-app
 ```
 
@@ -33,16 +36,22 @@ npm install
 
 #### Frontend (`apps/frontend/.env`)
 
+- Use Vite URL for deployment but for local development use http://localhost:3000
+
 ```env
 VITE_API_BASE_URL="ViteURL"
 ```
 
 #### Backend (`apps/backend/.env`)
 
+- For development use http://localhost:5173 for the frontend URL. 
+- For the database you will use postgresql://postgres:password@localhost:5433/project_name you can setup your own
+or use what is in the Docker compose yaml file.
+
 ```env
-PORT= "Port"
-FRONTEND_URL= "FrontendURL"
-DATABASE_URL= "databaseURL"
+PORT="Port"
+FRONTEND_URL="FrontendURL"
+DATABASE_URL="databaseURL"
 ```
 
 ---
