@@ -17,10 +17,13 @@ const LOW_STOCK_ENDPOINT = "/low-stock";
  * Fetch all low stock items
  * @returns - all low stock items
  */
-export async function fetchLowStockItems(): Promise<InventoryStock[]> {
+export async function fetchLowStockItems(token: string | null): Promise<InventoryStock[]> {
     const lowStockResponse: Response = await fetch(
         `${BASE_URL}${LOW_STOCK_ENDPOINT}`,
         {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
             credentials: "include"
         }
     );
@@ -64,7 +67,8 @@ export async function getLowStockItemById(
  */
 export async function updateLowStockItem(
     id: string,
-    updatedItem: Pick<InventoryStock, "quantity" | "lowStockThreshold">
+    updatedItem: Pick<InventoryStock, "quantity" | "lowStockThreshold">,
+    token: string | null
 ): Promise<InventoryStock> {
     const updatedLowStockResponse: Response = await fetch(
         `${BASE_URL}${LOW_STOCK_ENDPOINT}/${id}`,
@@ -75,7 +79,8 @@ export async function updateLowStockItem(
                 lowStockThreshold: updatedItem.lowStockThreshold
             }),
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             credentials: "include"
         }
@@ -92,12 +97,16 @@ export async function updateLowStockItem(
 /**
  * Delete a low stock item
  * @param id - item id
+ * @param token - authentication token
  */
-export async function deleteLowStockItem(id: string): Promise<void> {
+export async function deleteLowStockItem(id: string, token: string | null): Promise<void> {
     const deleteLowStockResponse: Response = await fetch(
         `${BASE_URL}${LOW_STOCK_ENDPOINT}/${id}`,
         {
             method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
             credentials: "include"
         }
     );
