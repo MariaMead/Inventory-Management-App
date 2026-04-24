@@ -16,9 +16,9 @@ import { requireAuth } from "@clerk/express";
 
 const router = Router();
 
-router.get("/", findOrCreateUser, getAllLowStockItems);
-router.get("/:id", findOrCreateUser, validateRequest(lowStockIdSchema), getLowStockItemById);
-router.put("/:id", requireAuth, validateRequest(lowStockPutSchema), updateLowStockItem);
-router.delete("/:id", requireAuth, validateRequest(lowStockIdSchema), deleteLowStockItem);
+router.get("/", requireAuth(), findOrCreateUser, getAllLowStockItems);
+router.get("/:id", requireAuth(), findOrCreateUser, validateRequest(lowStockIdSchema), getLowStockItemById);
+router.put("/:id", requireAuth(), findOrCreateUser, validateRequest(lowStockPutSchema), updateLowStockItem);
+router.delete("/:id", requireAuth(), findOrCreateUser, validateRequest(lowStockIdSchema), deleteLowStockItem);
 
 export default router;
