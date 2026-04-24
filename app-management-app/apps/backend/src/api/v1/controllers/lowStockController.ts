@@ -17,13 +17,13 @@ const getParamId = (id: string | string[] | undefined): string => {
  * Get all low stock items
  */
 export const getAllLowStockItems = async (
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
         const items: FrontendInventoryStock[] =
-            await lowStockService.getAllLowStockItems();
+            await lowStockService.getAllLowStockItems(req.userId ?? undefined);
 
         res.status(HTTP_STATUS.OK).json(
             successResponse(items, "Low stock items retrieved successfully.")

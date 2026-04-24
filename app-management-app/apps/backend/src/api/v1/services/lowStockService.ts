@@ -7,9 +7,20 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
  * Get all low stock items
  * @returns - list of low stock items
  */
-export const getAllLowStockItems = async (): Promise<FrontendInventoryStock[]> => {
+export const getAllLowStockItems = async (
+    userId: number | undefined
+): Promise<FrontendInventoryStock[]> => {
     try {
         const items = await prisma.inventory.findMany({
+            where: {
+                location: {
+                    users: {
+                        some: {
+                            id: userId
+                        }
+                    }
+                }
+            },
             include: {
                 product: true,
                 location: {
