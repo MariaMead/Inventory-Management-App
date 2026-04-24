@@ -1,7 +1,10 @@
 import './profilePage.css';
+import { useUser } from '@clerk/clerk-react';
 import { useUserProfileEdit } from '../../hooks/useUserProfileEdit';
 
 export default function ProfilePage() {
+  const { user } = useUser();
+
   const {
     isEditing,
     data,
@@ -10,7 +13,7 @@ export default function ProfilePage() {
     handleSave,
     handleCancel,
     onChange
-  } = useUserProfileEdit('1');
+  } = useUserProfileEdit(user?.id || '');
 
   return (
     <section className="profile-section">
