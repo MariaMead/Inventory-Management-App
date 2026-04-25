@@ -11,7 +11,13 @@ const profileSelect = {
     phone: true,
     address: true,
     locationId: true,
-    location: true
+    location: {
+        select: {
+            id: true,
+            name: true
+        }
+    }
+
 };
 
 // Map to front end profile
@@ -36,7 +42,7 @@ export const getProfileById = async (id: string): Promise<FrontendProfile | null
             where: { id: parseInt(id) },
             select: profileSelect
         });
-
+        console.log(userProfile);
         return userProfile ? mapToFrontendProfile(userProfile) : null;
 
     } catch (error) {
