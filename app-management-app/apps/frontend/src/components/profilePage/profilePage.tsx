@@ -1,7 +1,10 @@
 import './profilePage.css';
+import { useUser } from '@clerk/clerk-react';
 import { useUserProfileEdit } from '../../hooks/useUserProfileEdit';
 
 export default function ProfilePage() {
+  const { user } = useUser();
+
   const {
     isEditing,
     data,
@@ -10,7 +13,7 @@ export default function ProfilePage() {
     handleSave,
     handleCancel,
     onChange
-  } = useUserProfileEdit('1');
+  } = useUserProfileEdit(user?.id || '');
 
   return (
     <section className="profile-section">
@@ -103,6 +106,28 @@ export default function ProfilePage() {
                       />
                     ) : (
                       data.address
+                    )}
+                  </div>
+                </div>
+                <hr />
+                <div className="profile-row">
+                  <div className="profile-label">Location</div>
+                  <div className="profile-value">
+                    {isEditing ? (
+                      <select 
+                        className="profile-input"
+                        value={tempData.locationId ?? ""}
+                        onChange={(e) => onChange('locationId', e.target.value)}
+                        >
+                        <option value="">Select a location</option>
+                        <option value="1">Warehouse A</option>
+                        <option value="2">Warehouse B</option>
+                        <option value="3">Warehouse C</option>
+                        <option value="4">Warehouse D</option>
+
+                      </select>
+                    ) : (
+                      "Not set"
                     )}
                   </div>
                 </div>

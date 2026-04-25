@@ -3,6 +3,8 @@ import type { FrontendInventoryStock } from "@shared/types/frontend-InventorySto
 import { successResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as lowStockService from "../services/lowStockService";
+import { getAuth } from "@clerk/express";
+
 
 // typescript was yelling at me so I created this to convert the id param to a string.
 const getParamId = (id: string | string[] | undefined): string => {
@@ -17,13 +19,19 @@ const getParamId = (id: string | string[] | undefined): string => {
  * Get all low stock items
  */
 export const getAllLowStockItems = async (
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
+        const { userId } = getAuth(req);
+
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+        
         const items: FrontendInventoryStock[] =
-            await lowStockService.getAllLowStockItems();
+            await lowStockService.getAllLowStockItems(userId);
 
         res.status(HTTP_STATUS.OK).json(
             successResponse(items, "Low stock items retrieved successfully.")

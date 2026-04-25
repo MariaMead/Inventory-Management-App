@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 import * as ProfileService from "../services/profileService";
 import type { ProfileData } from "../services/profileService";
 import { FrontendProfile } from "@shared/types";
@@ -29,6 +30,7 @@ const getErrorMessage = (err: unknown) : string =>
  * }
  */
 export function useUserProfileEdit(userId: string) {
+    const { getToken } = useAuth();
     const defaultProfile: FrontendProfile = { name: "", email: "", phone: "", address: "" };
     
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -41,7 +43,11 @@ export function useUserProfileEdit(userId: string) {
 
         async function loadProfile() {
             try {
-                const profile = await ProfileService.fetchProfileById(userId);
+                const token = await getToken();
+                if (!token) {
+                    throw new Error("No authentication token available");
+                }
+                const profile = await ProfileService.fetchProfileById(userId, token);
                 if (!ignore) {
                     setData(profile);
                     setTempData(profile);
@@ -56,7 +62,7 @@ export function useUserProfileEdit(userId: string) {
         }
         loadProfile();
         return () => { ignore = true };
-    }, [userId]);
+    }, [userId, getToken]);
 
     const handleEdit = () => {
         if (data) setTempData(data);
@@ -66,12 +72,17 @@ export function useUserProfileEdit(userId: string) {
     const handleSave = async () => {
         if (!tempData) return;
         try {
-            const updatedData = await ProfileService.updateUserProfile(userId, tempData);
+            const token = await getToken();
+            if (!token) {
+                throw new Error("No authentication token available");
+            }
+            const updatedData = await ProfileService.updateUserProfile(userId, tempData, token);
             setData(updatedData);
             setTempData(updatedData);
             setIsEditing(false);
             setError(null);
             console.log('Profile saved successfully');
+            console.log("SENDING TO BACKEND:", tempData);
         } catch (err) {
             setError(`Failed to save profile: ${getErrorMessage(err)}`);
             console.error('Failed to save profile:', err);
@@ -84,7 +95,15 @@ export function useUserProfileEdit(userId: string) {
     };
 
     const onChange = (field: string, value: string) => {
-        setTempData(prev => ({ ...prev, [field]: value }));
+        setTempData(prev => ({ 
+            ...prev, 
+            [field]:
+                field === "locationId"
+                    ? value === ""
+                        ? undefined
+                        : Number(value)
+                    : value 
+        }));
     };
 
     return {

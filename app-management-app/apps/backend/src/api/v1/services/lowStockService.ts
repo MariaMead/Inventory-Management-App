@@ -7,8 +7,14 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
  * Get all low stock items
  * @returns - list of low stock items
  */
-export const getAllLowStockItems = async (): Promise<FrontendInventoryStock[]> => {
+export const getAllLowStockItems = async (
+    clerkId: string | undefined
+): Promise<FrontendInventoryStock[]> => {
     try {
+        if (!clerkId) {
+            throw new Error("Unauthorized");
+        }
+
         const items = await prisma.inventory.findMany({
             include: {
                 product: true,
@@ -22,14 +28,14 @@ export const getAllLowStockItems = async (): Promise<FrontendInventoryStock[]> =
                 id: "asc"
             }
         });
-
+        
         return items
             .filter((item) => item.quantity <= item.threshold)
             .map((item) => ({
                 id: item.id.toString(),
                 name: item.product.name,
                 description: item.product.description,
-                location: item.location.name,
+                location: item.location.name ?? "Unknown Location",
                 manufacturer: item.product.manufacturer,
                 category: item.product.category,
                 quantity: item.quantity,
